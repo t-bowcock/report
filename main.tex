@@ -11,6 +11,7 @@
 \usepackage[a4paper,width=150mm,top=25mm,bottom=25mm,includeheadfoot,margin=3.5cm]{geometry}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
+\usepackage{todonotes}
 
 \graphicspath{images/}
 
@@ -106,7 +107,7 @@ May 2023
 \addcontentsline{toc}{chapter}{\protect\numberline{List of Acronyms}}
 \chapter*{List of Acronyms}
 \begin{acronym}
-    \acro{HTTP}{regfsdfsf}
+    \acro{HTTP}{Hyper-Text Transfer Protocol}
 \end{acronym}
 
 \pagenumbering{arabic}
@@ -114,8 +115,11 @@ May 2023
 \chapter{Introduction}
 \input{chapters/introduction}
 
-\chapter{Literature Review}
-\input{chapters/literature_review}
+\chapter{Background}
+\input{chapters/background}
+
+\chapter{Requirements}
+\input{chapters/requirements}
 
 \chapter{Design}
 \input{chapters/design}
