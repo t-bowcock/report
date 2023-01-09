@@ -1,17 +1,111 @@
 \section{Introduction}
 \section{Existing Solutions}
 \subsection*{Fandom Wiki}
+The Binding of Isaac has two wiki sites hosted on the Fandom Wiki platform; one for the original flash 
+game\cite{BindingIsaacWiki}, and one for the modern version, commonly referred to as 'Rebirth'\cite{BindingIsaacRebirth}.
+For the purposes of this project we will only be considering the modern version as it is widely considered the 'goto' 
+version within the game's community.\par The website is contains comprehensive information on all aspects of the game, 
+and it is continualy updated by the community. Users can navigate the site using either predefined categories or a 
+powerful search tool. \par
+Advantages
+\begin{itemize}
+    \item Contains information on all aspects of the game
+    \item Actively maintained by the community
+    \item Usful search functionality
+\end{itemize}
+Disadvantages
+\begin{itemize}
+    \item So much information can make it hard to find what is relevant
+    \item Unable to search for interactions, have to go via each item 
+\end{itemize}
 \subsection*{Platinmum God}
+Platinmum God is a self-described `Isaac Cheat Sheet'\cite{IsaacCheatSheet} and it contains item and key mechanic 
+information for all versions of the game. The site is maintained by one person, and it claims to be more accurate than 
+the community wiki as it update is `tested thoroughly in the game using Cheat Engine'\cite{FrequentlyAskedQuestions}. 
+The information is split into pages based on the version of the game; users can navigate this using the item icons which
+ are arrayed on the page, or by using the search functionality. The search tool has some supported keywords, but will 
+still usually require entering an exact match to an entry in the data. For certain versions of the game there is also a 
+synergy finder tool which lets the user enter two items to see how they interact. However, this is limited to older 
+versions of the game and only a small set of the items are actually included in the tool. \par
+Advantages
+\begin{itemize}
+    \item Information is more reliable than the community wiki
+    \item Easier to reference quickly due to there being less information
+\end{itemize}
+Disadvantages
+\begin{itemize}
+    \item Only one maintainer can mean long update times
+    \item Only contains basic information about each item
+    \item Limited or no synergy information for most items
+    \item Harder to find items without knowing the name or what the item looks like
+\end{itemize}
 \section{Technology Review}
-\subsection{Database}
 \subsection{Client Side Framework}
+\subsubsection*{Angular}
+`Angular is an application-design framework and development platform for creating efficient and sophisticated 
+single-page apps.'\cite{AngularIntroductionAngular}
+% Made by google
+% free open source license
+% can be used as a full framework but not interested in that
+% Typescript
+% Very popular and backed by google so lots of documentation
+\subsubsection*{React}
+`React is a declarative, efficient, and flexible JavaScript library for building user interfaces. It lets you compose 
+complex UIs from small and isolated pieces of code called “components”.'\cite{TutorialIntroReact}
+% maintained by Meta
+% open source
+% library not a framework
+% JSX
+\subsubsection*{Vue}
+`An approachable, performant and versatile framework for building web user interfaces.'\cite{VueJsProgressive}
+% Not as popular and so less documentation and community support
+% framework
+% very fast and designed to be flexible
+\subsubsection*{Conclusion}
+% Chose Angular because:
+% - Used on placement
 \subsection{Server Side Framework}
-\subsection{Hosting}
-\subsubsection*{AWS}
-\subsubsection*{Azure}
-\subsubsection*{Google Cloud}
-\subsection{CI/CD}
-\subsubsection*{GitHub}
-\subsubsection*{CircleCI}
-\subsubsection*{Jenkins}
+% Only looked at python frameworks because of previous experience and neomodel
+\subsubsection*{Django}
+`Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design.'\cite{Django}
+% can be used as a full framework but not interested
+% Pretty much everythin you need comes as default (but also a lot that you dont need)
+\subsubsection*{Flask}
+`Flask is a lightweight WSGI web application framework.'\cite{ronacherFlaskSimpleFramework}
+% No database abstraction layer
+% Base install is quite minimal so needs extensions
+\subsubsection*{Conclusion}
+% Chose Django because:
+% - Used it more on placement
+\subsection{Database}
+\subsubsection*{Neo4j}
+`Neo4j is an open-source, NoSQL, native graph database that provides an ACID-compliant transactional backend for your 
+applications'\cite{WhatGraphDatabaseb}
+% - Aura platform for hosting the database remotely
+%   - Good for working on different machines
+%   - Removes dependency on local resources while developing
+%   - Bloom is good for viewing data while developing
+%   - Data importer
+% - Has lots of documentation and tutorials
+% - Free Aura instance
+\subsubsection*{Amazon Neptune}
+`Amazon Neptune is a purpose-built, high-performance graph database engine optimized for storing billions of 
+relationships and querying the graph with milliseconds latency.'\cite{WhatGraphDatabase}
+% Not completely free
+\subsubsection*{Conclusion}
+% Chose Neo4j because:
+% Free
+% more documentation
+The decision was made to use Neo4j. This is primarily because the Aura platfrom provides a permanent free database 
+instance which has ample resources for this project. There also exists a Python libraries, neomodel and django-neomodel,
+ for easily integrating database access in Django.
+
+% \subsection{Hosting}
+% \subsubsection*{AWS}
+% \subsubsection*{Azure}
+% \subsubsection*{Google Cloud}
+% \subsection{CI/CD}
+% \subsubsection*{GitHub}
+% \subsubsection*{CircleCI}
+% \subsubsection*{Jenkins}
 \section{Conclusion}
