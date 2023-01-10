@@ -1,5 +1,10 @@
 \section{Introduction}
+Through this chapter research will be conducted into varying areas related to the project. The conclusions made from 
+this research will support any design or implementation decisions made in the course of the project.
 \section{Existing Solutions}
+While there is no existing solution that is a direct comparison to this project, there are applications that have a 
+similar purpose. These will be analysed to determine what features should also be implemented in this project and what 
+could be improved by this project.
 \subsection*{Fandom Wiki}
 The Binding of Isaac has two wiki sites hosted on the Fandom Wiki platform; one for the original flash 
 game\cite{BindingIsaacWiki}, and one for the modern version, commonly referred to as 'Rebirth'\cite{BindingIsaacRebirth}.
@@ -40,72 +45,82 @@ Disadvantages
     \item Harder to find items without knowing the name or what the item looks like
 \end{itemize}
 \section{Technology Review}
+This section will research the potential technologies for the project and conclude with decisions about each.
 \subsection{Client Side Framework}
 \subsubsection*{Angular}
 `Angular is an application-design framework and development platform for creating efficient and sophisticated 
-single-page apps.'\cite{AngularIntroductionAngular}
-% Made by google
-% free open source license
-% can be used as a full framework but not interested in that
-% Typescript
-% Very popular and backed by google so lots of documentation
+single-page apps.'\cite{AngularIntroductionAngular} It was developed by Google to provide a complete framework for 
+simple to complex single-page apps. Due to the size of this framework and the fact that it utilises Typescript makes for
+ a steep learning curve, however this is counteracted by the large number of resources avaible from it being hugely 
+popular and backed by a large company.
 \subsubsection*{React}
 `React is a declarative, efficient, and flexible JavaScript library for building user interfaces. It lets you compose 
-complex UIs from small and isolated pieces of code called “components”.'\cite{TutorialIntroReact}
-% maintained by Meta
-% open source
-% library not a framework
-% JSX
+complex UIs from small and isolated pieces of code called “components”.'\cite{TutorialIntroReact} React allows the 
+developer to use JSX to combine HTML and JavaScript into one file, although this is not required to benefit from React. 
+Unlike Angular, this is a library and not a full framework. This will reduce the amount of learning required to use it,
+but it is likely extra libraries will be required to provide all the functionality required. There is also a lot of 
+resources available as React is maintained by Meta and is the most popular of the frameworks considered according the 
+2022 Stack Overflow Developer Survey\cite{StackOverflowDeveloper}.
 \subsubsection*{Vue}
-`An approachable, performant and versatile framework for building web user interfaces.'\cite{VueJsProgressive}
-% Not as popular and so less documentation and community support
-% framework
-% very fast and designed to be flexible
+`An approachable, performant and versatile framework for building web user interfaces.'\cite{VueJsProgressive} While not
+ backed by a large company, Vue has grown in popularity and has many large commercial sponsors. This means there is 
+likely to be less documentation available, but this library is relatively simple compared to the options considered 
+above. 
 \subsubsection*{Conclusion}
-% Chose Angular because:
-% - Used on placement
+After reviewing the three frameworks, the decision was made to use Angular for the project. This is due to prior 
+experience with the framework, and with no background in JavaScript the increase in learning curve from Typescript is 
+negligible. However, any of these choices would have been suitable for the project and the decision is mostly down to 
+personal preference.
 \subsection{Server Side Framework}
-% Only looked at python frameworks because of previous experience and neomodel
+Due to the previously mentioned lack of JavaScript experience, the decision was made to only consider Python based 
+frameworks to reduce the number of languages to learn.
 \subsubsection*{Django}
 `Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design.'\cite{Django}
-% can be used as a full framework but not interested
-% Pretty much everythin you need comes as default (but also a lot that you dont need)
+As with Angular, this can be used as a full framework and so, while it will contain almost everything required, there 
+will also be a lot of unnecessary features included. Django was designed to support rapid development, as shown by the 
+slogan `DjangoThe web framework for perfectionists with deadlines.'\cite{Django}. It features database abstraction which
+ allows developers to create `Models' to represent the data stored in a database, handling communication with the 
+database avoiding the need for coding in SQL.
 \subsubsection*{Flask}
-`Flask is a lightweight WSGI web application framework.'\cite{ronacherFlaskSimpleFramework}
-% No database abstraction layer
-% Base install is quite minimal so needs extensions
+`Flask is a lightweight WSGI web application framework.'\cite{ronacherFlaskSimpleFramework} It is a micro-framework that
+ started as a wrapper for Jinja and Werkzeug and has grown into a popular web framework. Flask does not provide much 
+functionality that is already provided by another extension, this keeps Flask small but can introduce complex library 
+requirements. 
 \subsubsection*{Conclusion}
-% Chose Django because:
-% - Used it more on placement
+Django was chosen here, again due to prior experience, particulary in using Django and Angular together. While using 
+two large frameworks may result in the project suffering from an amount of bloat, the prior experience means completeing
+ the project and having time to refine it is more likely.
 \subsection{Database}
+A graph database is a type of NoSQL database that uses nodes, edges, and properties to represent and store data. It is 
+often described as storing data as it would be drawn on a whiteboard. This approach makes querying relationships in the 
+data much faster as they are embedded in the data, rather than using JOIN operations or cross lookups often seen in SQL 
+implementations. The underlying storage mechanism of a graph database can vary, some depending on a abstraction to store
+ the data in a typical table based manner and some opting for a `native' approach, maintaining the graph strucutre 
+throughout the system.
 \subsubsection*{Neo4j}
 `Neo4j is an open-source, NoSQL, native graph database that provides an ACID-compliant transactional backend for your 
-applications'\cite{WhatGraphDatabaseb}
-% - Aura platform for hosting the database remotely
-%   - Good for working on different machines
-%   - Removes dependency on local resources while developing
-%   - Bloom is good for viewing data while developing
-%   - Data importer
-% - Has lots of documentation and tutorials
-% - Free Aura instance
+applications'\cite{WhatGraphDatabaseb} Neo4j provide various tools for developing with graph databases, only the Aura 
+platform will be considered here as it is the direct comparison for the other tools discussed and a managed service is 
+ideal for this project. A free database instance is prodvided in AuraDB for each account which allows up to 200000 nodes
+ and 400000 relationships. Aura features a data import tool that allows developers to create a model of the database 
+structure which can then be populated with data from CSV files. It also has an explore tool, Bloom, this allows 
+developers to view the database graphically and queries can be performed to show expected outputs. Neo4j provide a lot 
+of useful documentation and tutorials for all the services they provide, this includes free ebooks and course style 
+content to guide users through the material.
 \subsubsection*{Amazon Neptune}
 `Amazon Neptune is a purpose-built, high-performance graph database engine optimized for storing billions of 
-relationships and querying the graph with milliseconds latency.'\cite{WhatGraphDatabase}
-% Not completely free
+relationships and querying the graph with milliseconds latency.'\cite{WhatGraphDatabase} Neptune is a managed graph 
+database service prodvided by AWS. It offers a high throughput and low latency system that automatically scales with 
+demand. As to be expected from any AWS product it is also highly secure and fault tolerant. However, this comes at a 
+cost; a free trial is offered for 30 days and after that a monthly fee is incurred with additional costs for data 
+transfer, backups, and storage consumption.
 \subsubsection*{Conclusion}
-% Chose Neo4j because:
-% Free
-% more documentation
 The decision was made to use Neo4j. This is primarily because the Aura platfrom provides a permanent free database 
 instance which has ample resources for this project. There also exists a Python libraries, neomodel and django-neomodel,
- for easily integrating database access in Django.
-
-% \subsection{Hosting}
-% \subsubsection*{AWS}
-% \subsubsection*{Azure}
-% \subsubsection*{Google Cloud}
-% \subsection{CI/CD}
-% \subsubsection*{GitHub}
-% \subsubsection*{CircleCI}
-% \subsubsection*{Jenkins}
+ for easily integrating database access using Django Models. 
 \section{Conclusion}
+Throughout this chapter research has been conducted that will continue to provide benefit throughout the design and 
+implementation stages. The review of existing solutions has highlighted the need for this application and has provided 
+insight into how existing solutions have addressed the issue. The technology review has made it clear which technologies
+ should be taken forward in the project as well as providing some background on why these technologies are needed and 
+how they work.
