@@ -9,24 +9,24 @@ could be improved by this project.
 The Binding of Isaac has two wiki sites hosted on the Fandom Wiki platform; one for the original flash 
 game\cite{BindingIsaacWiki}, and one for the modern version, commonly referred to as 'Rebirth'\cite{BindingIsaacRebirth}.
 For the purposes of this project we will only be considering the modern version as it is widely considered the 'goto' 
-version within the game's community.\par The website is contains comprehensive information on all aspects of the game, 
-and it is continualy updated by the community. Users can navigate the site using either predefined categories or a 
+version within the game's community.\par The website contains comprehensive information on all aspects of the game, 
+and it is continually updated by the community. Users can navigate the site using either predefined categories or a 
 powerful search tool. \par
 Advantages
 \begin{itemize}
     \item Contains information on all aspects of the game
     \item Actively maintained by the community
-    \item Usful search functionality
+    \item Useful search functionality
 \end{itemize}
 Disadvantages
 \begin{itemize}
     \item So much information can make it hard to find what is relevant
     \item Unable to search for interactions, have to go via each item 
 \end{itemize}
-\subsection*{Platinmum God}
-Platinmum God is a self-described `Isaac Cheat Sheet'\cite{IsaacCheatSheet} and it contains item and key mechanic 
+\subsection*{Platinum God}
+Platinum God is a self-described `Isaac Cheat Sheet'\cite{IsaacCheatSheet}, and it contains item and key mechanic 
 information for all versions of the game. The site is maintained by one person, and it claims to be more accurate than 
-the community wiki as it update is `tested thoroughly in the game using Cheat Engine'\cite{FrequentlyAskedQuestions}. 
+the community wiki as its updates are `tested thoroughly in the game using Cheat Engine'\cite{FrequentlyAskedQuestions}. 
 The information is split into pages based on the version of the game; users can navigate this using the item icons which
  are arrayed on the page, or by using the search functionality. The search tool has some supported keywords, but will 
 still usually require entering an exact match to an entry in the data. For certain versions of the game there is also a 
@@ -78,7 +78,7 @@ frameworks to reduce the number of languages to learn.
 `Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design.'\cite{Django}
 As with Angular, this can be used as a full framework and so, while it will contain almost everything required, there 
 will also be a lot of unnecessary features included. Django was designed to support rapid development, as shown by the 
-slogan `DjangoThe web framework for perfectionists with deadlines.'\cite{Django}. It features database abstraction which
+slogan `The web framework for perfectionists with deadlines.'\cite{Django}. It features database abstraction which
  allows developers to create `Models' to represent the data stored in a database, handling communication with the 
 database avoiding the need for coding in SQL.
 \subsubsection*{Flask}
@@ -87,35 +87,35 @@ database avoiding the need for coding in SQL.
 functionality that is already provided by another extension, this keeps Flask small but can introduce complex library 
 requirements. 
 \subsubsection*{Conclusion}
-Django was chosen here, again due to prior experience, particulary in using Django and Angular together. While using 
-two large frameworks may result in the project suffering from an amount of bloat, the prior experience means completeing
+Django was chosen here, again due to prior experience, particularly in using Django and Angular together. While using 
+two large frameworks may result in the project suffering from an amount of bloat, the prior experience means completing
  the project and having time to refine it is more likely.
 \subsection{Database}
 A graph database is a type of NoSQL database that uses nodes, edges, and properties to represent and store data. It is 
 often described as storing data as it would be drawn on a whiteboard. This approach makes querying relationships in the 
 data much faster as they are embedded in the data, rather than using JOIN operations or cross lookups often seen in SQL 
-implementations. The underlying storage mechanism of a graph database can vary, some depending on a abstraction to store
- the data in a typical table based manner and some opting for a `native' approach, maintaining the graph strucutre 
+implementations. The underlying storage mechanism of a graph database can vary, some depending on an abstraction to store
+ the data in a typical table based manner and some opting for a `native' approach, maintaining the graph structure 
 throughout the system.
 \subsubsection*{Neo4j}
 `Neo4j is an open-source, NoSQL, native graph database that provides an ACID-compliant transactional backend for your 
 applications'\cite{WhatGraphDatabaseb} Neo4j provide various tools for developing with graph databases, only the Aura 
-platform will be considered here as it is the direct comparison for the other tools discussed and a managed service is 
-ideal for this project. A free database instance is prodvided in AuraDB for each account which allows up to 200000 nodes
+platform will be considered here as it is the direct comparison for the other tools discussed, and a managed service is 
+ideal for this project. A free database instance is provided in AuraDB for each account which allows up to 200000 nodes
  and 400000 relationships. Aura features a data import tool that allows developers to create a model of the database 
 structure which can then be populated with data from CSV files. It also has an explore tool, Bloom, this allows 
 developers to view the database graphically and queries can be performed to show expected outputs. Neo4j provide a lot 
-of useful documentation and tutorials for all the services they provide, this includes free ebooks and course style 
+of useful documentation and tutorials for all the services they provide, this includes free e-books and course style 
 content to guide users through the material.
 \subsubsection*{Amazon Neptune}
 `Amazon Neptune is a purpose-built, high-performance graph database engine optimized for storing billions of 
 relationships and querying the graph with milliseconds latency.'\cite{WhatGraphDatabase} Neptune is a managed graph 
-database service prodvided by AWS. It offers a high throughput and low latency system that automatically scales with 
-demand. As to be expected from any AWS product it is also highly secure and fault tolerant. However, this comes at a 
+database service provided by AWS. It offers a high throughput and low latency system that automatically scales with 
+demand. As to be expected from any AWS product it is also highly secure and fault-tolerant. However, this comes at a 
 cost; a free trial is offered for 30 days and after that a monthly fee is incurred with additional costs for data 
 transfer, backups, and storage consumption.
 \subsubsection*{Conclusion}
-The decision was made to use Neo4j. This is primarily because the Aura platfrom provides a permanent free database 
+The decision was made to use Neo4j. This is primarily because the Aura platform provides a permanent free database 
 instance which has ample resources for this project. There also exists a Python libraries, neomodel and django-neomodel,
  for easily integrating database access using Django Models. 
 \section{Conclusion}
