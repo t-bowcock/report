@@ -1,6 +1,6 @@
 % Inspired by the template by Dave Stevens - https://github.com/davestevens/Loughborough-University-PhD-Thesis-Template/blob/master/thesis.tex
 % A4 paper size selected, default is 11pt font, to change to 12pt use [a4paper, 12pt] as option to documentclass
-\documentclass[a4paper]{report}
+\documentclass[a4paper,twoside,10pt]{report}
 
 \usepackage{acronym}
 \usepackage[dvips]{graphicx}
@@ -8,7 +8,7 @@
 \usepackage{color}
 \usepackage{url}
 \usepackage{fancybox}
-\usepackage[includeheadfoot,margin=3.5cm]{geometry}
+\usepackage[margin=3.5cm]{geometry}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{todonotes}
@@ -20,21 +20,8 @@
 
 \linespread{1.3}
 
-% Setup headers and footers
-% \pagestyle{fancy}
-% %\fancyhf{}
-% %\lhead{\leftmark}
-% % Center on all pages
-% % \fancyhead[C]{---Draft---}
-% % Page number placed on right side on odd pages and left side on even pages
-% \fancyfoot{}
-% \fancyfoot[LE,RO]{\thepage}
-% \fancyfoot[LO,RE]{Tyler Bowcock}
-
-
 \begin{document}
 \pagenumbering{roman}
-
 
 % Front Page begins
 
@@ -42,14 +29,12 @@
 
 \fancypage{}{\fbox}
 
-%\thisfancyput{%
 
 \Large{
     \hfill \begin{tabular}{l}
         Computer Science \\
         COC251 \\
         B927949
-        %Replace this text with your ID number
     \end{tabular}
     }
     
@@ -59,7 +44,6 @@
 %\bigskip
 \vspace*{\fill}
 
-%replace by your Project title
 \Large{\textbf{Creating a knowledge base \\for The Binding of Isaac}}
 
 \vspace*{\fill}
@@ -86,15 +70,18 @@ May 2023
 % Front Page ends
 
 \newpage
-
 %Reset so that next pages do not have a box around them
 \fancypage{}{}
-
 
 \begin{abstract}
 \end{abstract}
 
+
+
 \tableofcontents
+
+\addcontentsline{toc}{chapter}{\protect\numberline{List of Figures}}
+\listoffigures
 
 \addcontentsline{toc}{chapter}{\protect\numberline{List of Acronyms}}
 \chapter*{List of Acronyms}
@@ -109,8 +96,23 @@ May 2023
     \acro{XML}{Extensible Markup Language}
 \end{acronym}
 
-\pagenumbering{arabic}
 
+% Setup headers and footers
+\pagestyle{fancy}
+\fancyfoot{}
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[LO,RE]{Tyler Bowcock}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[LE,RO]{\thepage}
+    \fancyfoot[LO,RE]{Tyler Bowcock}
+    \renewcommand{\headrulewidth}{0pt}% Line at the header invisible
+}
+
+\newpage
+
+\pagenumbering{arabic}
 \chapter{Introduction}
 \input{chapters/introduction}
 
