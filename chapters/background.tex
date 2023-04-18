@@ -3,15 +3,17 @@ Through this chapter research will be conducted into varying areas related to th
 this research will support any design or implementation decisions made in the course of the project.
 \section{The Binding of Isaac}
 `The Binding of Isaac: Rebirth is a randomly generated action RPG shooter with heavy Rogue-like elements.'\cite*{BindingIsaacRebirtha}
-\todo{Explain the game and the genre}
-% Explain rougelike vs rougelite
-% Explain the main concept of the game
-% Maybe explain synergies
+The player progresses through 'floors' which are made up of a series of 'rooms', each room can contain a variety of enemies, traps, and items.
+Each floor has a set of 'special rooms', namely a boss room, item room and a shop. The goal is to use the items found on each floor to defeat each boss,
+progressing to the next floor until the game is finished. The items in the game often interact, this interaction is usually called a 'synergy' if it benefits the player.
+In this instance the rogue-like elements are that the game has to be successfully completed many times, these are called 'runs'. Each run is unique and depending on the 
+actions the player takes in the run it can have different outcomes and more parts of the game can be unlocked.
 \section{Existing Solutions}
 While there is no existing solution that is a direct comparison to this project, there are applications that have a 
 similar purpose. These will be analysed to determine what features should also be implemented in this project and what 
 could be improved by this project.
 \subsection*{Fandom Wiki}
+\todo{screenshot}
 The Binding of Isaac has two wiki sites hosted on the Fandom Wiki platform; one for the original flash 
 game\cite{BindingIsaacWiki}, and one for the modern version, commonly referred to as 'Rebirth'\cite{BindingIsaacRebirth}.
 For the purposes of this project we will only be considering the modern version as it is widely considered the 'goto' 
@@ -30,6 +32,7 @@ Disadvantages
     \item Unable to search for interactions, have to go via each item 
 \end{itemize}
 \subsection*{Platinum God}
+\todo{screenshot}
 Platinum God is a self-described `Isaac Cheat Sheet'\cite{IsaacCheatSheet}, and it contains item and key mechanic 
 information for all versions of the game. The site is maintained by one person, and it claims to be more accurate than 
 the community wiki as its updates are `tested thoroughly in the game using Cheat Engine'\cite{FrequentlyAskedQuestions}. 
@@ -57,7 +60,7 @@ This section will research the potential technologies for the project and conclu
 `Angular is an application-design framework and development platform for creating efficient and sophisticated 
 single-page apps.'\cite{AngularIntroductionAngular} It was developed by Google to provide a complete framework for 
 simple to complex single-page apps. Due to the size of this framework and the fact that it utilises Typescript makes for
- a steep learning curve, however this is counteracted by the large number of resources avaible from it being hugely 
+ a steep learning curve, however this is counteracted by the large number of resources available from it being hugely 
 popular and backed by a large company.
 \subsubsection*{React}
 `React is a declarative, efficient, and flexible JavaScript library for building user interfaces. It lets you compose 
