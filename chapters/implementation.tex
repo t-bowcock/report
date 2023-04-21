@@ -18,11 +18,15 @@ Explore (or whatever it is called), is useful for testing queries quickly
 \subsection{Libraries}
 \subsection{Client Side}
 cytoscape - used to create graphs on the front end
-% rxjs?
+rxjs - observable thing
 material - googles own library of components to make ui quickly
 \subsection{Server Side}
-% neomodel
-% more ...
+django-neomodel
+django-cors-headers
+djangorestframework
+neomodel
+pylint
+black
 \section{Data Processing}
 this section covers getting the data needed to create the database and creating the database
 \subsection{Finding Data Source}
@@ -46,23 +50,47 @@ then regex is used to grab the relevant sections from the text
 \subsection{Cleaning the Data}
 regex is used again to clean the sections of text
 The text contains lots of tags for vairous features in the wiki such as dlc tags and links to other pages
-
+turns bullet pointed lists into nested arrays
 \subsection{Importing into Database}
-% generating CSV files in the correct format to use the data importer tool
+neo4j has a data importer tool which uses csv files to populate a data model
+csv files were generated from the data objects in python
 \begin{figure}[H]
     \centering
     \includegraphics[scale=0.4]{dataImport}
     \caption{Database Model in Neo4j Data Importer}
 \end{figure}
 \section{Web Stack}
-% creating the Django and angular projects and connecting them together
-% talk about submodules
+creating django project with an api app and a main "query" app
+api app contains webserver (?) and the settings
+each app then contains the the models, views and urls etc
+urls.py defines what functions get called by each urls
+views.py defines the functions used by urls, these functions contain all the functionality the user interacts with,
+each function takes in a request from the url and depending on the type of request (e.g get, post etc), performs the relevant action
+models.py contains classes each of which represent a type if data entity
+
+create a angular project and any components
+(explain angular project structure)
+each component represents a "screen"
+(explain component structure)
+
+There is a shared services file, this defines the interaction with the backend api
+the address of the backend server is defined in there and the functions that make the http requests
+
+each project has it's own git repo which are then submoduled into the main project repo
 \section{Database Interaction}
-% creating models
-% finding cypher query for getting relationships and all data
-% explain that it's really slow
+Used neomodel to define classes for each entity and relationship type, these classes contain methods for retrieving data
+Getting all nodes is very easy due to built in methods, however these do not exist for relationships
+so to get all relationships you have to perform a cypher query to get them
 \section{Client Side}
-% tables
-% using cytoscape to create graphs
-% hardcoding files
+first made tables to check everything worked
+found that the json like object created by neomodel couldn't be interpreted by the front, so had to manually make a get method for each class
+This causes getting large amounts of data (relationships) to take quite a long time
+
+I created a second component to show the data in a graph form as per my initial design
+To do this I used cytoscape.js (more info)
+had to rewrite how the data is formatted when sent to the front end so that it matchs what cytoscape expects
+still takes a long time to get data from backend 
+so decided to write it to a json file so at least for quicker debugging it can load directly from the file
+tweaked some settings to make the graph easier to read
+
 \section{Conclusion}
