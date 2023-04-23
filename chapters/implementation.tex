@@ -1,32 +1,30 @@
 \section{Introduction}
 \section{Tools}
 \subsection{IDE}
-Visual Studio Code was used for this project 
-
-Used it before and will likely contiunue using it 
-excellent support for a huge range of languages
-
+Visual Studio Code was used for this project due to prior experience with the IDE. It is also one of the most popular tools in the industry 
+as shown by the Stack Overflow Developer Survey\cite{StackOverflowDeveloper} and the TOP IDE Index\cite{TOPIDETop}.
+VS Code has excellent support for many programming languages, and with a wealth of community made extensions there are many tools to aid with development.
 \subsection{Version Control}
-Some defintion
-Useful for creating branches for experimental features
-allowed working between different computers with ease
-backups
+Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later.\cite{GitVersionControl}
+Using version control with an external hosting provider also makes working over several computers easy which will be useful for this project and it ensures everything is backed up remotely.
+Git was chosen for version control as it is the industry standard, with GitHub being used as the hosting provider.
 \subsection{Database Visualisation}
-Neo4j has several tools included as part of auraDB
-Bloom is used to visualise the data as a graph, as discussed in the design section
-Explore (or whatever it is called), is useful for testing queries quickly
+Neo4j has two tools for database visualisation as part of the AuraDB web interface; Bloom and Browser. Bloom is used to 
+visualise the data in a graph as has been discussed in the design chapter previously. Browser is used to test CYPHER queries on the database.
+CYPHER is the query language created by Neo4j for retrieving data from their graph databases. As shown in the screenshot below, the user can enter a 
+query and have the data returned as a graph, table (represented as a series of JSON objects), raw text and as code (JSON objects).
+This is useful for quickly testing CYPHER queries and debugging database interactions.
 \subsection{Libraries}
 \subsection{Client Side}
 cytoscape - used to create graphs on the front end
 rxjs - observable thing
 material - googles own library of components to make ui quickly
 \subsection{Server Side}
-django-neomodel
-django-cors-headers
-djangorestframework
-neomodel
-pylint
-black
+django-cors-headers - allows in browser requests to djano application from other origins
+djangorestframework - ???
+neomodel - used to create models for getting data from neo4j database
+pylint - used to enforce PEP8 coding standards for code quality
+black - autoformats code to ensure readability
 \section{Data Processing}
 this section covers getting the data needed to create the database and creating the database
 \subsection{Finding Data Source}
