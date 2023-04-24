@@ -6,7 +6,7 @@ as shown by the Stack Overflow Developer Survey\cite{StackOverflowDeveloper} and
 VS Code has excellent support for many programming languages, and with a wealth of community made extensions there are many tools to aid with development.
 \subsection{Version Control}
 Version control is a system that records changes to a file or set of files over time so that you can recall specific versions later.\cite{GitVersionControl}
-Using version control with an external hosting provider also makes working over several computers easy which will be useful for this project and it ensures everything is backed up remotely.
+Using version control with an external hosting provider also makes working over several computers easy which will be useful for this project, and it ensures everything is backed up remotely.
 Git was chosen for version control as it is the industry standard, with GitHub being used as the hosting provider.
 \subsection{Database Visualisation}
 Neo4j has two tools for database visualisation as part of the AuraDB web interface; Bloom and Browser. Bloom is used to 
@@ -14,6 +14,11 @@ visualise the data in a graph as has been discussed in the design chapter previo
 CYPHER is the query language created by Neo4j for retrieving data from their graph databases. As shown in the screenshot below, the user can enter a 
 query and have the data returned as a graph, table (represented as a series of JSON objects), raw text and as code (JSON objects).
 This is useful for quickly testing CYPHER queries and debugging database interactions.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{neo4jBrowser}
+    \caption{AuraDB Browser}
+\end{figure}
 \subsection{Libraries}
 \subsection{Client Side}
 cytoscape - used to create graphs on the front end

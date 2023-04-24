@@ -2364,6 +2364,9 @@
     <bcf:citekey order="13" intorder="1">ronacherFlaskSimpleFramework</bcf:citekey>
     <bcf:citekey order="14" intorder="1">WhatGraphDatabaseb</bcf:citekey>
     <bcf:citekey order="15" intorder="1">WhatGraphDatabase</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">StackOverflowDeveloper</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">TOPIDETop</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">GitVersionControl</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
