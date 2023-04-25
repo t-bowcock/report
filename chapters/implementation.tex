@@ -33,17 +33,45 @@ This is useful for quickly testing CYPHER queries and debugging database interac
     this is required for the front end and back end to communicate properly.
 \end{description}
 \section{Data Processing}
-this section covers getting the data needed to create the database and creating the database
+The first major section of the implementation was setting up the graph database and getting the data required to do so.
 \subsection{Finding Data Source}
-fandom wikis all should have an xml dump available on the special:statistics page
-It isnt always up to date, so i had to request a update
-while waiting for that I looked at other BOI sources such as platinum god and the game files
+The initial project brief suggested using the Fandom wiki for the data source as Fandom wikis have the option for downloading 
+an XML dump from the `Special:Statistics' page. As discussed in the background chapter, the Fandom wiki is also the most comprehensive 
+source of data about the game, especially regarding the item interactions. The XML dumps are not always kept up to date, so while 
+a new dump was being requested other options for the data source were investigated. This included investigating the game files, where 
+all the resource files have been packed in to `A' files. In the folder containing the resource files there is a readme which explains 
+that this was done to prevent spoilers and any secrets being found through the files. A resource extractor tool is included with later versions of the game, 
+however the files do not contain any information regarding the interactions of items.
 
-got the xml file and its massive and not consistently formatted
-it's set up like a huge list of pages but theres not order to them and sometimes random stuff is added in between them
-looked challenging to extract data from so looked towards other games i.e. pokemon
-however that wiki didn't have a dump at all and i got no response regarding getting one
-other data sources for pokemon exist but each have their own issues
+Once received, the updated XML dump presented its own challenges, the first being its size, at just under 500,000 lines long and around 20MB it was too 
+large for most text editors to load with syntax highlighting. This made it difficult to understand the structure of the data as the XML tags became harder 
+to pick out from regular text. Aside from a small preamble, all the data in the file is contained in a series of `page' elements, which unsurprisingly represents a page on the site.
+Each page element has a similar structure to the below example.
+\begin{verbatim}
+    <page>
+    <title>Template:•</title>
+    <ns>10</ns>
+    <id>161</id>
+    <redirect title="Template:*" />
+    <revision>
+      <id>161</id>
+      <timestamp>2014-09-16T20:27:12Z</timestamp>
+      <contributor>
+        <username>Maintenance script-gpuser</username>
+        <id>41555837</id>
+      </contributor>
+      <comment>&amp;lt;default import&amp;gt;</comment>
+      <origin>161</origin>
+      <model>wikitext</model>
+      <format>text/x-wiki</format>
+      <text bytes="24" sha1="2dwqfi7oey6311xkwxu3dhjasn8gfsi" xml:space="preserve">#redirect [[Template:*]]</text>
+      <sha1>2dwqfi7oey6311xkwxu3dhjasn8gfsi</sha1>
+    </revision>
+  </page>
+\end{verbatim}
+
+The important parts to note from this is that the title is the web page title and the text element contains the data to be displayed (or in this case a redirect to another page).
+There doesn't appear to be a particular order to the pages and due to the formatting of the file it can be hard to tell where one page ends and another begins.
 \subsection{Data Extraction}
 while looking for alternative sources and waiting on response from wiki admins worked on extracting the data
 used beautifulsoup to parse the xml tags and traverse the data
