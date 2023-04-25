@@ -11,7 +11,7 @@ Git was chosen for version control as it is the industry standard, with GitHub b
 \subsection{Database Visualisation}
 Neo4j has two tools for database visualisation as part of the AuraDB web interface; Bloom and Browser. Bloom is used to 
 visualise the data in a graph as has been discussed in the design chapter previously. Browser is used to test CYPHER queries on the database.
-CYPHER is the query language created by Neo4j for retrieving data from their graph databases. As shown in the screenshot below, the user can enter a 
+CYPHER is the query language created by Neo4j for retrieving data from their graph databases. As shown Figure 4.1, the user can enter a 
 query and have the data returned as a graph, table (represented as a series of JSON objects), raw text and as code (JSON objects).
 This is useful for quickly testing CYPHER queries and debugging database interactions.
 \begin{figure}[h]
@@ -19,12 +19,17 @@ This is useful for quickly testing CYPHER queries and debugging database interac
     \includegraphics[width=0.8\textwidth]{neo4jBrowser}
     \caption{AuraDB Browser}
 \end{figure}
-\subsection{Libraries}
+\section{Libraries}
+\subsection{Data Processing}
+\begin{description}
+    \item[Beautiful Soup] - A Python library for pulling data out of HTML and XML files\cite{BeautifulSoupDocumentation}. 
+    Used to parse the XML dump and extract data for the database.
+\end{description}
 \subsection{Client Side}
 \begin{description}
     \item[Cytoscape] - A JavaScript library that `allows you to easily display and manipulate rich, interactive graphs'\cite{franzCytoscapeJsGraph2016}. 
     Used in this project to display the data in graphs to the user.
-    \item[Material] - An Angular specific library containing material design componenets, used in this project to quickly create UI componenets.
+    \item[Material] - An Angular specific library containing material design components, used in this project to quickly create UI components.
 \end{description}
 \subsection{Server Side}
 \begin{description}
@@ -36,49 +41,72 @@ This is useful for quickly testing CYPHER queries and debugging database interac
 The first major section of the implementation was setting up the graph database and getting the data required to do so.
 \subsection{Finding Data Source}
 The initial project brief suggested using the Fandom wiki for the data source as Fandom wikis have the option for downloading 
-an XML dump from the `Special:Statistics' page. As discussed in the background chapter, the Fandom wiki is also the most comprehensive 
+an XML dump from the \verb|Special:Statistics| page. As discussed in section 2.3, the Fandom wiki is also the most comprehensive 
 source of data about the game, especially regarding the item interactions. The XML dumps are not always kept up to date, so while 
 a new dump was being requested other options for the data source were investigated. This included investigating the game files, where 
-all the resource files have been packed in to `A' files. In the folder containing the resource files there is a readme which explains 
+all the resource files have been packed in to \verb|A| files. In the folder containing the resource files there is a readme which explains 
 that this was done to prevent spoilers and any secrets being found through the files. A resource extractor tool is included with later versions of the game, 
-however the files do not contain any information regarding the interactions of items.
-
+however the files do not contain any information regarding the interactions of items.\par
 Once received, the updated XML dump presented its own challenges, the first being its size, at just under 500,000 lines long and around 20MB it was too 
 large for most text editors to load with syntax highlighting. This made it difficult to understand the structure of the data as the XML tags became harder 
-to pick out from regular text. Aside from a small preamble, all the data in the file is contained in a series of `page' elements, which unsurprisingly represents a page on the site.
-Each page element has a similar structure to the below example.
-\begin{verbatim}
-    <page>
-    <title>Template:•</title>
-    <ns>10</ns>
-    <id>161</id>
-    <redirect title="Template:*" />
-    <revision>
-      <id>161</id>
-      <timestamp>2014-09-16T20:27:12Z</timestamp>
-      <contributor>
-        <username>Maintenance script-gpuser</username>
-        <id>41555837</id>
-      </contributor>
-      <comment>&amp;lt;default import&amp;gt;</comment>
-      <origin>161</origin>
-      <model>wikitext</model>
-      <format>text/x-wiki</format>
-      <text bytes="24" sha1="2dwqfi7oey6311xkwxu3dhjasn8gfsi" xml:space="preserve">#redirect [[Template:*]]</text>
-      <sha1>2dwqfi7oey6311xkwxu3dhjasn8gfsi</sha1>
-    </revision>
-  </page>
-\end{verbatim}
+to pick out from regular text. Aside from a small preamble, all the data in the file is contained in a series of \verb|page| elements, which unsurprisingly represents a page on the site.
+Each page element has a similar structure to the below example (Fig. 4.2).
+\begin{figure}[H]
+    \begin{lstlisting}[language=XML]
+        <page>
+        <title>Template:</title>
+        <ns>10</ns>
+        <id>161</id>
+        <redirect title="Template:*" />
+        <revision>
+          <id>161</id>
+          <timestamp>2014-09-16T20:27:12Z</timestamp>
+          <contributor>
+            <username>Maintenance script-gpuser</username>
+            <id>41555837</id>
+          </contributor>
+          <comment>&amp;lt;default import&amp;gt;</comment>
+          <origin>161</origin>
+          <model>wikitext</model>
+          <format>text/x-wiki</format>
+          <text bytes="24" sha1="2dwqfi7oey6311xkwxu3dhjasn8gfsi" xml:space="preserve">#redirect [[Template:*]]</text>
+          <sha1>2dwqfi7oey6311xkwxu3dhjasn8gfsi</sha1>
+        </revision>
+      </page>
+    \end{lstlisting}
+    \caption{Example page format}
+\end{figure}
 
-The important parts to note from this is that the title is the web page title and the text element contains the data to be displayed (or in this case a redirect to another page).
+The important parts to note from this is that the \verb|title| element is the web page title and the \verb|text| element contains the data to be displayed (or in this case a redirect to another page).
 There doesn't appear to be a particular order to the pages and due to the formatting of the file it can be hard to tell where one page ends and another begins.
 \subsection{Data Extraction}
-while looking for alternative sources and waiting on response from wiki admins worked on extracting the data
+Due to the structure of the XML data, the easiest way to extract the data is to use the title tags for each page to find the relevant and pages 
+and then pull the data from the text tag. The XML file contains collections pages which each contain a list of items available in each version of the game, this can be 
+used to get a list of all the item names. Unfortunately, the same does not exist for trinkets and characters as the pages that would 
+contain that list instead use a template which autofills the data. As a temporary fix, the list of trinkets is fetched from a hardcoded file 
+and the character names are fetched from the \verb|Custom Challenges| page. In the future this could be updated to scrape that information from the website.
+\begin{figure}[H]
+    \begin{lstlisting}[language=Python]
+        ITEM_REGEX = re.compile("content =(.*?)}}", flags=re.DOTALL)
+
+        def _get_item_names(self):
+            collection = self.soup.find("title", text="Collection Page (Repentance)").find_parent("page").find("text").text
+            return [
+                x.strip()
+                for x in ITEM_REGEX.search(collection)[1].replace("\n", "").replace("Number Two", "No. 2").split(",")
+            ]
+    \end{lstlisting}
+    \caption{Function that returns the list of item names}
+\end{figure}
+
+Explain this \verb|^|
+
+
 used beautifulsoup to parse the xml tags and traverse the data
 Used the items collection page to get the names of all the items locate the correct xml elements
 trinkets and characters(?) had to be hardcoded as a complete list didnt exist in the xml
 
-beautifulsoup is used to traverse the data and get the 'text' child of all the relevant 'pages'
+beautifulsoup is used to traverse the data and get the `text' child of all the relevant `pages'
 then regex is used to grab the relevant sections from the text
 \subsection{Cleaning the Data}
 regex is used again to clean the sections of text

@@ -2362,12 +2362,15 @@
     <bcf:citekey order="11" intorder="1">Django</bcf:citekey>
     <bcf:citekey order="12" intorder="1">Django</bcf:citekey>
     <bcf:citekey order="13" intorder="1">ronacherFlaskSimpleFramework</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">WhatGraphDatabaseb</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">WhatGraphDatabasea</bcf:citekey>
     <bcf:citekey order="15" intorder="1">WhatGraphDatabase</bcf:citekey>
     <bcf:citekey order="16" intorder="1">StackOverflowDeveloper</bcf:citekey>
     <bcf:citekey order="17" intorder="1">TOPIDETop</bcf:citekey>
     <bcf:citekey order="18" intorder="1">GitVersionControl</bcf:citekey>
-    <bcf:citekey order="19" intorder="1">franzCytoscapeJsGraph2016</bcf:citekey>
+    <bcf:citekey order="19" intorder="1">BeautifulSoupDocumentation</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">franzCytoscapeJsGraph2016</bcf:citekey>
+    <bcf:citekey order="21" intorder="1">NeomodelDocumentationNeomodel</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">yiuDjangocorsheadersDjangocorsheadersDjango</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
