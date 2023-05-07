@@ -82,9 +82,9 @@ There doesn't appear to be a particular order to the pages and due to the format
 \subsection{Data Extraction}
 Due to the structure of the XML data, the easiest way to extract the data is to use the title tags for each page to find the relevant and pages 
 and then pull the data from the text tag. The XML file contains collections pages which each contain a list of items available in each version of the game, this can be 
-used to get a list of all the item names. Unfortunately, the same does not exist for trinkets and characters as the pages that would 
-contain that list instead use a template which autofills the data. As a temporary fix, the list of trinkets is fetched from a hardcoded file 
-and the character names are fetched from the \verb|Custom Challenges| page. In the future this could be updated to scrape that information from the website.
+used to get a list of all the item names. Character names are fetched from the \verb|Characters| page. This has a list of links to the character pages, from which the names can be extracted using RegEx. 
+Unfortunately, the same does not exist for trinkets as the page that would contain that list instead uses a template which autofills the data. 
+As a temporary fix, the list of trinkets is fetched from a hardcoded file.
 \begin{figure}[H]
     \begin{lstlisting}[language=Python]
         ITEM_REGEX = re.compile("content =(.*?)}}", flags=re.DOTALL)
@@ -99,15 +99,29 @@ and the character names are fetched from the \verb|Custom Challenges| page. In t
     \caption{Function that returns the list of item names}
 \end{figure}
 
-Explain this \verb|^|
+Figure 4.3 shows the code used for getting the list of item names, similar code has been used for getting character names.
+\verb|re| is a Python library that provides regular expression matching operations. In the data extraction script a series of 
+compiled RegEx statements are defined as constants, \verb|ITEM_REGEX| being one of them. These are used through the script 
+to pull data from the XML file based on the format of the data. Here BeautifulSoup is used to find the title tag that contains the text 
+`Collection Page (Repentance)', this is then used to get its parent and to search that for the text element. 
+To get the data from the string of text the RegEx statement is used to search for a string that starts with \verb|content =| and ends with \verb|}}|.
+The \verb|(.*?)| matches a string of any characters of any length non-greedily and puts it in a match group. 
+This means it will match against any character until the first instance of \verb|}}| and the object returned is subsriptable to get the match groups.
+Accessing group 0 is the whole match which will included the \verb|content =| and \verb|}}|, accessing group 1 is the first (and in this case only) match group.
+The string returned by accessing the match group then has new line characters removed and and is split into a list using the commas.
+Each value in this array then has any leading and trailing whitespace removed using \verb|strip()| and a listcomprehension.
+There is an extra step needed here due to the nature of the XML data and that is manually replacing the item name for `Number Two'.
+This had to be done as the name appears in several different formats throughout the data, but the only one that has a page with data in is `No. 2'. 
+The rest of the pages just redirect back to that page and so instead of handling the redirect it is easier to catch and replace the different formats when they appear.
 
-
-used beautifulsoup to parse the xml tags and traverse the data
-Used the items collection page to get the names of all the items locate the correct xml elements
-trinkets and characters(?) had to be hardcoded as a complete list didnt exist in the xml
-
-beautifulsoup is used to traverse the data and get the `text' child of all the relevant `pages'
-then regex is used to grab the relevant sections from the text
+got list of names now what?
+- iterate over list of all title tags and use if statements to check if its one we care about
+- faster to do that then search for each name we do care about because accessing all the data in BeautifulSoup takes a while(?)
+- in each loop it: checks its a tag we care about > gets text and id > check if ID is none > extract and append data to array > add id to lookup > add synergies/interactions to list
+- once we have the data for all the nodes we can work on the relationships
+- using the lists created before each entry is processed by using regex to get any tags and then looking up their id to find a target ID
+- source id, target id and descripton is then put into new array
+- theres a bunch of stupid data that has be caught using if statements and corrected
 \subsection{Cleaning the Data}
 regex is used again to clean the sections of text
 The text contains lots of tags for vairous features in the wiki such as dlc tags and links to other pages
@@ -120,6 +134,7 @@ csv files were generated from the data objects in python
     \includegraphics[scale=0.4]{dataImport}
     \caption{Database Model in Neo4j Data Importer}
 \end{figure}
+\todo{Database model is wrong}
 \section{Web Stack}
 creating django project with an api app and a main "query" app
 api app contains webserver (?) and the settings

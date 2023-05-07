@@ -1,0 +1,504 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{WhatGraphDatabase}{online}{}
+      \list{organization}{1}{%
+        {Amazon Web Services, Inc.}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{langid}{american}
+      \field{title}{What {{Is}} a {{Graph Database}}?}
+      \field{urlday}{6}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\6T6YV7SN\\graph.html
+      \endverb
+      \verb{urlraw}
+      \verb https://aws.amazon.com/nosql/graph/
+      \endverb
+      \verb{url}
+      \verb https://aws.amazon.com/nosql/graph/
+      \endverb
+    \endentry
+    \entry{BindingIsaacRebirtha}{online}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{The Binding of Isaac: Rebirth is a randomly generated action RPG shooter with heavy Rogue-like elements. Following Isaac on his journey players will find bizarre treasures that change Isaac’s form giving him super human abilities and enabling him to fight off droves of mysterious creatures, discover secrets and fight his way to safety.}
+      \field{langid}{english}
+      \field{shorttitle}{The {{Binding}} of {{Isaac}}}
+      \field{title}{The {{Binding}} of {{Isaac}}: {{Rebirth}} on {{Steam}}}
+      \field{urlday}{31}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\N6QXC5P4\\The_Binding_of_Isaac_Rebirth.html
+      \endverb
+      \verb{urlraw}
+      \verb https://store.steampowered.com/app/250900/The_Binding_of_Isaac_Rebirth/
+      \endverb
+      \verb{url}
+      \verb https://store.steampowered.com/app/250900/The_Binding_of_Isaac_Rebirth/
+      \endverb
+    \endentry
+    \entry{BindingIsaacWiki}{online}{}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The Binding of Isaac Wiki is a huge, informative Wiki site focusing on the famous indie game series ''The Binding of Isaac'', including the original game and its ''Rebirth'' remake. The Wiki contains a lot of official information about characters, items, monsters, bosses, rooms, and more!}
+      \field{langid}{english}
+      \field{title}{The {{Binding}} of {{Isaac Wiki}}}
+      \field{urlday}{9}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\VUMXKIGM\\The_Binding_of_Isaac_Wiki.html
+      \endverb
+      \verb{urlraw}
+      \verb https://bindingofisaac.fandom.com/wiki/The_Binding_of_Isaac_Wiki
+      \endverb
+      \verb{url}
+      \verb https://bindingofisaac.fandom.com/wiki/The_Binding_of_Isaac_Wiki
+      \endverb
+    \endentry
+    \entry{BindingIsaacRebirth}{online}{}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{The Binding of Isaac: Rebirth is a randomly generated action RPG shooter with heavy roguelike elements. Players will accompany Isaac on a quest to escape his mother, facing off against droves of mysterious creatures, discovering secrets, and fighting fearsome bosses. Along the way, Isaac can find bizarre treasures that change his form and give him super-human abilities. But it won't be easy! Rebirth is the remake of the original game that sports a game engine that runs at 60 FPS, pixelated style}
+      \field{langid}{english}
+      \field{shorttitle}{Binding of {{Isaac}}}
+      \field{title}{Binding of {{Isaac}}: {{Rebirth Wiki}}}
+      \field{urlday}{9}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\95FWE7EL\\Binding_of_Isaac_Rebirth_Wiki.html
+      \endverb
+      \verb{urlraw}
+      \verb https://bindingofisaacrebirth.fandom.com/wiki/Binding_of_Isaac:_Rebirth_Wiki
+      \endverb
+      \verb{url}
+      \verb https://bindingofisaacrebirth.fandom.com/wiki/Binding_of_Isaac:_Rebirth_Wiki
+      \endverb
+    \endentry
+    \entry{IsaacCheatSheet}{online}{}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labeltitlesource}{title}
+      \field{title}{Isaac {{Cheat Sheet}} - {{Platinum God}}}
+      \field{urlday}{9}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\VIYPAEH8\\platinumgod.co.uk.html
+      \endverb
+      \verb{urlraw}
+      \verb https://platinumgod.co.uk/
+      \endverb
+      \verb{url}
+      \verb https://platinumgod.co.uk/
+      \endverb
+    \endentry
+    \entry{FrequentlyAskedQuestions}{online}{}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labeltitlesource}{title}
+      \field{title}{Frequently {{Asked Questions}} - {{Isaac Cheat Sheet}} - {{Platinum God}}}
+      \field{urlday}{9}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\TXERZWZA\\faq.html
+      \endverb
+      \verb{urlraw}
+      \verb https://platinumgod.co.uk/faq
+      \endverb
+      \verb{url}
+      \verb https://platinumgod.co.uk/faq
+      \endverb
+    \endentry
+    \entry{AngularIntroductionAngular}{online}{}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labeltitlesource}{title}
+      \field{title}{Angular - {{Introduction}} to the {{Angular}} Docs}
+      \field{urlday}{9}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\H76A5F7F\\docs.html
+      \endverb
+      \verb{urlraw}
+      \verb https://angular.io/docs
+      \endverb
+      \verb{url}
+      \verb https://angular.io/docs
+      \endverb
+    \endentry
+    \entry{TutorialIntroReact}{online}{}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{A JavaScript library for building user interfaces}
+      \field{langid}{english}
+      \field{shorttitle}{Tutorial}
+      \field{title}{Tutorial: {{Intro}} to {{React}} – {{React}}}
+      \field{urlday}{9}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\8PFJ4TYX\\tutorial.html
+      \endverb
+      \verb{urlraw}
+      \verb https://reactjs.org/tutorial/tutorial.html
+      \endverb
+      \verb{url}
+      \verb https://reactjs.org/tutorial/tutorial.html
+      \endverb
+    \endentry
+    \entry{StackOverflowDeveloper}{online}{}
+      \list{organization}{1}{%
+        {Stack Overflow}%
+      }
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In May 2022 over 70,000 developers told us how they learn and level up, which tools they’re using, and what they want.}
+      \field{langid}{english}
+      \field{title}{Stack {{Overflow Developer Survey}} 2022}
+      \field{urlday}{10}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\XGFK6ZP2\\2022.html
+      \endverb
+      \verb{urlraw}
+      \verb https://survey.stackoverflow.co/2022/?utm_source=social-share&utm_medium=social&utm_campaign=dev-survey-2022
+      \endverb
+      \verb{url}
+      \verb https://survey.stackoverflow.co/2022/?utm_source=social-share&utm_medium=social&utm_campaign=dev-survey-2022
+      \endverb
+    \endentry
+    \entry{VueJsProgressive}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Vue.Js - {{The Progressive JavaScript Framework}} | {{Vue}}.Js}
+      \field{urlday}{9}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\5UTK6RAY\\vuejs.org.html
+      \endverb
+      \verb{urlraw}
+      \verb https://vuejs.org/
+      \endverb
+      \verb{url}
+      \verb https://vuejs.org/
+      \endverb
+    \endentry
+    \entry{Django}{online}{}
+      \list{organization}{1}{%
+        {Django Project}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The web framework for perfectionists with deadlines.}
+      \field{langid}{english}
+      \field{title}{Django}
+      \field{urlday}{9}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\KG4YRL3C\\www.djangoproject.com.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.djangoproject.com/
+      \endverb
+      \verb{url}
+      \verb https://www.djangoproject.com/
+      \endverb
+    \endentry
+    \entry{ronacherFlaskSimpleFramework}{software}{}
+      \name{author}{1}{}{%
+        {{hash=a7224aeeab1874f7a2968578c0f953ee}{%
+           family={Ronacher},
+           familyi={R\bibinitperiod},
+           given={Armin},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{a7224aeeab1874f7a2968578c0f953ee}
+      \strng{fullhash}{a7224aeeab1874f7a2968578c0f953ee}
+      \strng{bibnamehash}{a7224aeeab1874f7a2968578c0f953ee}
+      \strng{authorbibnamehash}{a7224aeeab1874f7a2968578c0f953ee}
+      \strng{authornamehash}{a7224aeeab1874f7a2968578c0f953ee}
+      \strng{authorfullhash}{a7224aeeab1874f7a2968578c0f953ee}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{shorttitle}{Flask}
+      \field{title}{Flask: {{A}} Simple Framework for Building Complex Web Applications.}
+      \field{urlday}{9}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{version}{2.2.2}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\M4HV6LEW\\Flask.html
+      \endverb
+      \verb{urlraw}
+      \verb https://palletsprojects.com/p/flask
+      \endverb
+      \verb{url}
+      \verb https://palletsprojects.com/p/flask
+      \endverb
+      \keyw{Internet - WWW/HTTP - Dynamic Content,Internet - WWW/HTTP - WSGI,Internet - WWW/HTTP - WSGI - Application,Software Development - Libraries - Application Frameworks}
+    \endentry
+    \entry{WhatGraphDatabasea}{online}{}
+      \list{organization}{1}{%
+        {Neo4j Graph Data Platform}%
+      }
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{shorttitle}
+      \field{langid}{english}
+      \field{shorttitle}{What Is a {{Graph Database}}?}
+      \field{title}{What Is a {{Graph Database}}? - {{Developer Guides}}}
+      \field{urlday}{9}
+      \field{urlmonth}{1}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\CHHRTJT5\\graph-database.html
+      \endverb
+      \verb{urlraw}
+      \verb https://neo4j.com/developer/graph-database/
+      \endverb
+      \verb{url}
+      \verb https://neo4j.com/developer/graph-database/
+      \endverb
+    \endentry
+    \entry{TOPIDETop}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{abstract}{TOP IDE Top Integrated Development Environment}
+      \field{langid}{english}
+      \field{title}{{{TOP IDE Top Integrated Development Environment}} Index}
+      \field{urlday}{23}
+      \field{urlmonth}{4}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\RX2G9U43\\IDE.html
+      \endverb
+      \verb{urlraw}
+      \verb https://pypl.github.io/IDE.html
+      \endverb
+      \verb{url}
+      \verb https://pypl.github.io/IDE.html
+      \endverb
+    \endentry
+    \entry{GitVersionControl}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Git - {{About Version Control}}}
+      \field{urlday}{23}
+      \field{urlmonth}{4}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\3TLQC2VA\\Getting-Started-About-Version-Control.html
+      \endverb
+      \verb{urlraw}
+      \verb https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control
+      \endverb
+      \verb{url}
+      \verb https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control
+      \endverb
+    \endentry
+    \entry{BeautifulSoupDocumentation}{online}{}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labeltitlesource}{title}
+      \field{title}{Beautiful {{Soup Documentation}} — {{Beautiful Soup}} 4.4.0 Documentation}
+      \field{urlday}{25}
+      \field{urlmonth}{4}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\TT4EWK25\\latest.html
+      \endverb
+      \verb{urlraw}
+      \verb https://beautiful-soup-4.readthedocs.io/en/latest/
+      \endverb
+      \verb{url}
+      \verb https://beautiful-soup-4.readthedocs.io/en/latest/
+      \endverb
+    \endentry
+    \entry{franzCytoscapeJsGraph2016}{article}{}
+      \name{author}{6}{}{%
+        {{hash=8159564001ff2457139c10c428057293}{%
+           family={Franz},
+           familyi={F\bibinitperiod},
+           given={Max},
+           giveni={M\bibinitperiod}}}%
+        {{hash=ae0291578767e311dc8a30eea812b516}{%
+           family={Lopes},
+           familyi={L\bibinitperiod},
+           given={Christian\bibnamedelima T.},
+           giveni={C\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=dd01d65127fb03f9313700a0318e6266}{%
+           family={Huck},
+           familyi={H\bibinitperiod},
+           given={Gerardo},
+           giveni={G\bibinitperiod}}}%
+        {{hash=47ab5b4291802c7fccdc42c32571e551}{%
+           family={Dong},
+           familyi={D\bibinitperiod},
+           given={Yue},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=db4ab9cb6847a2d556724b3c6107d52c}{%
+           family={Sumer},
+           familyi={S\bibinitperiod},
+           given={Onur},
+           giveni={O\bibinitperiod}}}%
+        {{hash=c29f7b920aa1659722641ed669a03e28}{%
+           family={Bader},
+           familyi={B\bibinitperiod},
+           given={Gary\bibnamedelima D.},
+           giveni={G\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{dbefdc81a13de8ab69fa12af7fa9b666}
+      \strng{fullhash}{51aa87083466a24051a7a3663c713884}
+      \strng{bibnamehash}{dbefdc81a13de8ab69fa12af7fa9b666}
+      \strng{authorbibnamehash}{dbefdc81a13de8ab69fa12af7fa9b666}
+      \strng{authornamehash}{dbefdc81a13de8ab69fa12af7fa9b666}
+      \strng{authorfullhash}{51aa87083466a24051a7a3663c713884}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Abstract Summary: Cytoscape.js is an open-source JavaScript-based graph library. Its most common use case is as a visualization software component, so it can be used to render interactive graphs in a web browser. It also can be used in a headless manner, useful for graph operations on a server, such as Node.js. Availability and implementation: Cytoscape.js is implemented in JavaScript. Documentation, downloads and source code are available at http://js.cytoscape.org. Contact: ~gary.bader@utoronto.ca}
+      \field{day}{15}
+      \field{issn}{1367-4811, 1367-4803}
+      \field{journaltitle}{Bioinformatics}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{number}{2}
+      \field{shorttitle}{Cytoscape.Js}
+      \field{title}{Cytoscape.Js: A Graph Theory Library for Visualisation and Analysis}
+      \field{urlday}{24}
+      \field{urlmonth}{4}
+      \field{urlyear}{2023}
+      \field{volume}{32}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{309\bibrangedash 311}
+      \range{pages}{3}
+      \verb{doi}
+      \verb 10.1093/bioinformatics/btv557
+      \endverb
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\D7UM4GNC\\Franz et al. - 2016 - Cytoscape.js a graph theory library for visualisa.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://academic.oup.com/bioinformatics/article/32/2/309/1744007
+      \endverb
+      \verb{url}
+      \verb https://academic.oup.com/bioinformatics/article/32/2/309/1744007
+      \endverb
+    \endentry
+    \entry{NeomodelDocumentationNeomodel}{online}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{Neomodel Documentation — Neomodel 5.0.0 Documentation}
+      \field{urlday}{24}
+      \field{urlmonth}{4}
+      \field{urlyear}{2023}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://neomodel.readthedocs.io/en/latest/
+      \endverb
+      \verb{url}
+      \verb https://neomodel.readthedocs.io/en/latest/
+      \endverb
+    \endentry
+    \entry{yiuDjangocorsheadersDjangocorsheadersDjango}{software}{}
+      \name{author}{1}{}{%
+        {{hash=db9afe134297a5f451121e75971b7a99}{%
+           family={Yiu},
+           familyi={Y\bibinitperiod},
+           given={Otto},
+           giveni={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{db9afe134297a5f451121e75971b7a99}
+      \strng{fullhash}{db9afe134297a5f451121e75971b7a99}
+      \strng{bibnamehash}{db9afe134297a5f451121e75971b7a99}
+      \strng{authorbibnamehash}{db9afe134297a5f451121e75971b7a99}
+      \strng{authornamehash}{db9afe134297a5f451121e75971b7a99}
+      \strng{authorfullhash}{db9afe134297a5f451121e75971b7a99}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{shorttitle}{Django-Cors-Headers}
+      \field{title}{Django-Cors-Headers: Django-Cors-Headers Is a {{Django}} Application for Handling the Server Headers Required for {{Cross-Origin Resource Sharing}} ({{CORS}}).}
+      \field{urlday}{24}
+      \field{urlmonth}{4}
+      \field{urlyear}{2023}
+      \field{version}{3.14.0}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb C\:\\Users\\tjb74\\Zotero\\storage\\2AJIK4P5\\django-cors-headers.html
+      \endverb
+      \verb{urlraw}
+      \verb https://github.com/adamchainz/django-cors-headers
+      \endverb
+      \verb{url}
+      \verb https://github.com/adamchainz/django-cors-headers
+      \endverb
+      \keyw{api,cors;,django;,middleware;,rest;}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
