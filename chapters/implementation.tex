@@ -153,20 +153,25 @@ There is a shared services file, this defines the interaction with the backend a
 the address of the backend server is defined in there and the functions that make the http requests
 
 each project has it's own git repo which are then submoduled into the main project repo
-\section{Database Interaction}
+\subsection{Database Interaction}
 Used neomodel to define classes for each entity and relationship type, these classes contain methods for retrieving data
 Getting all nodes is very easy due to built in methods, however these do not exist for relationships
 so to get all relationships you have to perform a cypher query to get them
-\section{Client Side}
+talk about this generally as specific methods and problems will be talked about in each sectio
+\subsection{Displaying Data in Tables}
 first made tables to check everything worked
 found that the json like object created by neomodel couldn't be interpreted by the front, so had to manually make a get method for each class
 This causes getting large amounts of data (relationships) to take quite a long time
-
+\subsection{Displaying Data in Graph}
 I created a second component to show the data in a graph form as per my initial design
 To do this I used cytoscape.js (more info)
 had to rewrite how the data is formatted when sent to the front end so that it matchs what cytoscape expects
 still takes a long time to get data from backend 
 so decided to write it to a json file so at least for quicker debugging it can load directly from the file
 tweaked some settings to make the graph easier to read
-
+explain fixing the long loading issue
+\subsection{Inspect Element}
+writing proper async queries
+overlay issue
+\subsection{Searching}
 \section{Conclusion}
