@@ -161,6 +161,12 @@ to create usable data. The item name and ID is added to a lookup dictionary whic
 Importantly, for each ID a letter prefix is added to indicate whether the ID belongs to an item, trinket or character; this is needed to ensure the IDs 
 are unique across the entire database.
 
+The function for getting character data is much simpler than for items and trinkets, this is because it only gets the character name and ID. 
+The decision was made to ignore character data because it is much more complicated than any of the other data types. The page for each character has 
+a unique structure, especially for characters that are a combination of two characters such as Jacob and Esau or The Forgotten. Combined with the fact that 
+most of the character data does not contribute to the relationships in the database which is the main focus, it was decided that processing the character data was outside 
+the scope of this project. 
+
 Once all the item, character, and trinket data has been extracted the lookup dictionaries can be used to process the synergies and interactions. 
 The function to process the data is fairly simple, it iterates over each entry in the dictionary, each entry contains a list of strings. That list is iterated over 
 and the RegEx show in figure 4.5 is applied to create a list of item names which represent the relationship destination. The RegEx looks for tags that link to other items/characters/trinkets,
@@ -214,7 +220,7 @@ models.py contains classes each of which represent a type if data entity
 
 create a angular project and any components
 (explain angular project structure)
-each component represents a "screen"
+each component represents sozdfn;sergnlarejgnsl
 (explain component structure)
 
 There is a shared services file, this defines the interaction with the backend api
