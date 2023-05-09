@@ -106,35 +106,103 @@ to pull data from the XML file based on the format of the data. Here BeautifulSo
 `Collection Page (Repentance)', this is then used to get its parent and to search that for the text element. 
 To get the data from the string of text the RegEx statement is used to search for a string that starts with \verb|content =| and ends with \verb|}}|.
 The \verb|(.*?)| matches a string of any characters of any length non-greedily and puts it in a match group. 
-This means it will match against any character until the first instance of \verb|}}| and the object returned is subsriptable to get the match groups.
+This means it will match against any character until the first instance of \verb|}}| and the object returned is sub-scriptable to get the match groups.
 Accessing group 0 is the whole match which will included the \verb|content =| and \verb|}}|, accessing group 1 is the first (and in this case only) match group.
 The string returned by accessing the match group then has new line characters removed and and is split into a list using the commas.
-Each value in this array then has any leading and trailing whitespace removed using \verb|strip()| and a listcomprehension.
+Each value in this array then has any leading and trailing whitespace removed using \verb|strip()| and a list comprehension.
 There is an extra step needed here due to the nature of the XML data and that is manually replacing the item name for `Number Two'.
-This had to be done as the name appears in several different formats throughout the data, but the only one that has a page with data in is `No. 2'. 
+This had to be done as the name appears in several formats throughout the data, but the only one that has a page with data in is `No. 2'. 
 The rest of the pages just redirect back to that page and so instead of handling the redirect it is easier to catch and replace the different formats when they appear.
 
-got list of names now what?
-- iterate over list of all title tags and use if statements to check if its one we care about
-- faster to do that then search for each name we do care about because accessing all the data in BeautifulSoup takes a while(?)
-- in each loop it: checks its a tag we care about > gets text and id > check if ID is none > extract and append data to array > add id to lookup > add synergies/interactions to list
-- once we have the data for all the nodes we can work on the relationships
-- using the lists created before each entry is processed by using regex to get any tags and then looking up their id to find a target ID
-- source id, target id and descripton is then put into new array
-- theres a bunch of stupid data that has be caught using if statements and corrected
+Functions could now be written for getting item, trinket and character data respectively. These functions all follow the same format 
+and the differences are in catching special exceptions and the output created.
+\begin{figure}[H]
+    \begin{lstlisting}[language=Python]
+        def get_all_items(self) -> list:
+        item_names = self._get_item_names()
+        tags = self.soup.find_all("title")
+        item_data = []
+        for tag in tags:
+            if tag.text not in item_names:
+                continue
+
+            item_text = tag.find_parent("page").find("text").text
+
+            item_id = self._infobox_get(item_text, ID_REGEX)
+            if item_id is None:
+                continue
+
+            item_data.append(
+                [
+                    tag.text,
+                    f"I{item_id}",
+                    self._infobox_get(item_text, QUOTE_REGEX),
+                    self._infobox_get(item_text, DESCRIPTION_REGEX),
+                    self._infobox_get(item_text, ITEM_QUALITY_REGEX),
+                    self._infobox_get(item_text, UNLOCK_REGEX),
+                    self._list_get(item_text, EFFECTS_REGEX, True),
+                    self._list_get(item_text, NOTES_REGEX, True),
+                ]
+            )
+            self.id_lookup[tag.text.lower()] = f"I{item_id}"
+            self.synergies[tag.text] = self._list_get(item_text, SYNERGIES_REGEX)
+            self.interactions[tag.text] = self._list_get(item_text, INTERACTIONS_REGEX)
+        return item_data
+    \end{lstlisting}
+    \caption{Function that extracts the item data}
+\end{figure}
+Each function iterates over the title tags in the XML file and checks if it is in the list of tags being looked for. 
+If it is the text element belonging to that title tag is fetched and an attempt at getting the item ID is made. This is done 
+by passing the relevant compiled RegEx statement and the text to process to a function which will execute the RegEx and return \verb|None| 
+if no match is found and the ID string if a match is found. If no ID is found that means the page found isn't actually an item page and so can be ignored.
+The rest of the data can then be extracted using the same method as for getting the ID, the only difference being for the effects and notes data another function 
+is used that has extra processing for handling lists in the text. The synergy and interaction data is added to a separate dictionary as it requires extra processing 
+to create usable data. The item name and ID is added to a lookup dictionary which will be used later when processing the synergies/interactions.
+Importantly, for each ID a letter prefix is added to indicate whether the ID belongs to an item, trinket or character; this is needed to ensure the IDs 
+are unique across the entire database.
+
+Once all the item, character, and trinket data has been extracted the lookup dictionaries can be used to process the synergies and interactions. 
+The function to process the data is fairly simple, it iterates over each entry in the dictionary, each entry contains a list of strings. That list is iterated over 
+and the RegEx show in figure 4.5 is applied to create a list of item names which represent the relationship destination. The RegEx looks for tags that link to other items/characters/trinkets,
+for example {{i|Libra}}. However, these tags don't seem to always follow a set structure which is why the RegEx has some extra match groups either side of the \verb|(.+?)| group to catch and ignore extra 
+characters that are not relevant. These irregularities also mean an if block is needed to catch links where the link text does not match the text in the title tag.
+\begin{figure}[H]
+    \begin{lstlisting}[language=Python]
+        destinations = re.findall(r"{{[ict]\|(1=)?(.+?)(\|.+?)?}}", relationship[0], re.IGNORECASE)
+    \end{lstlisting}
+    \caption{Synergy/Interaction RegEx}
+\end{figure}
+The ID lookups are then used to find the ID for the source entity and the destination entity found via the RegEx. This is then added to the output along with the string containing the relationship data.
 \subsection{Cleaning the Data}
-regex is used again to clean the sections of text
-The text contains lots of tags for vairous features in the wiki such as dlc tags and links to other pages
-turns bullet pointed lists into nested arrays
+The data extracted above still contains special characters and formatting that is used by the XML to generate the website correctly. 
+This includes \verb|<br>| HTML tags, tags using square brackets to denote alternative text/images and the curly brace tags seen above which are used for a variety of purposes.
+One of the uses of curly brace tags is to show which version of the game the information is relevant to; on the webpage this is show via a small image but in the XML
+that image is represent by a tag in the following format \verb#{{dlc|<tag>}}# where \verb|<tag>| is replaced by a code that represent the game version.
+These tags are replaced with a relevant string using RegEx, e.g. \verb#{{dlc|anr}}# becomes `(Added in Afterbirth, Removed in Repentance)'.
+RegEx is then used to extract the useful text from the rest of the tags and remove the brackets and any other formatting characters.
+
+The lists used when processing synergies and interactions have to be generated from the string return by the data extraction.
+In the XML the bullet pointed lists are represented using `*' characters where the number of characters indicates the level of indentation.
+The string is split using the bullet characters and then a recursive function is used to create a nested list that represents the list indentation.
+Optionally, the function can also take the nested list and create a formatted string with tab spacing to create the indentation.
 \subsection{Importing into Database}
-neo4j has a data importer tool which uses csv files to populate a data model
-csv files were generated from the data objects in python
+The AuraDB platform provided by Neo4j has a data importer tool which uses CSV files to populate a predefined model. 
+Creating CSV files with Python is very simple, the data needs to be in a 2D array where each inner array is a row in the CSV file,
+the CSV writer also takes a list of headers and from the two it can create a CSV file. The CSV files needed to be created so that each file represents 
+a node/edge in the model, this meant 5 CSV files were needed. With the files uploaded to the import tool the model shown in figure 4.6 could be created.
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.4]{dataImport}
+    \includegraphics[scale=0.3]{dataImport}
     \caption{Database Model in Neo4j Data Importer}
 \end{figure}
-\todo{Database model is wrong}
+As the model shows items and trinkets can have interactions and relationships between each other and themselves. The relationships to character 
+entities are only towards the character nodes because the character data is not processed as discussed above.
+After importing the data Neo4j Bloom can be used to check the database structure which is show in figure 4.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{importedData}
+    \caption{Bloom showing complete database}
+\end{figure}
 \section{Web Stack}
 creating django project with an api app and a main "query" app
 api app contains webserver (?) and the settings
