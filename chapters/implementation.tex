@@ -210,6 +210,8 @@ After importing the data Neo4j Bloom can be used to check the database structure
     \caption{Bloom showing complete database}
 \end{figure}
 \section{Web Stack}
+
+
 creating django project with an api app and a main "query" app
 api app contains webserver (?) and the settings
 each app then contains the the models, views and urls etc
@@ -228,24 +230,54 @@ the address of the backend server is defined in there and the functions that mak
 
 each project has it's own git repo which are then submoduled into the main project repo
 \subsection{Database Interaction}
-Used neomodel to define classes for each entity and relationship type, these classes contain methods for retrieving data
-Getting all nodes is very easy due to built in methods, however these do not exist for relationships
-so to get all relationships you have to perform a cypher query to get them
-talk about this generally as specific methods and problems will be talked about in each sectio
+Neomodel was used to allow Django to connect to the remote database. The username, password and database URI are stored as 
+constants which are passed into the neomodel configuration. Then classes can be defined which represent each of the node and edge types.
+For node classes, class attributes are defined for each property of the node and for each relationship type the node can have. The relationships 
+only need to be defined in one direction and so most of the relationships are defined in the \verb|Item| class. The edge classes only need to 
+define the properties of the relationship. These classes contain built-in methods for performing simple queries on the data, for more 
+advanced queries neomodel has a method for querying with user defined CYPHER queries.
 \subsection{Displaying Data in Tables}
-first made tables to check everything worked
-found that the json like object created by neomodel couldn't be interpreted by the front, so had to manually make a get method for each class
-This causes getting large amounts of data (relationships) to take quite a long time
+To help ensure the database was functioning properly and to provide an opportunity to learn the intricacies of neomodel in a simpler 
+environment, the decision was made to implement displaying the data in tables first. This would require fetching all the data for each 
+node and edge type and formatting it correctly. Getting all the data for a set of nodes is easy with neomodel due to the \verb|nodes.all()| method, 
+which returns a list of all the nodes for the given node type. However, this data was not in a format accepted by the front end. The list contained 
+instances of the model class which have string representations which meant it could be printed in the correct format, but that would not the format 
+returned in the HTTP request. Instead, a format function was written which extracts the data into a Python dictionary which can then be returned in a JSON repsonse.
+This method was suitable for node data, however relationships do not have a method equivalent to \verb|nodes.all()|. To get the data 
+for all the relationships of one type a custom CYPHER query has to be used, as shown in figure 4.8 for synergy data.
+\begin{figure}[H]
+    \begin{lstlisting}[language=Python]
+        neomodel.db.cypher_query("MATCH (n)-[r:Synergy]->(m) RETURN n, r, m")
+    \end{lstlisting}
+    \caption{Initial CYPHER query for getting synergy data}
+\end{figure}
+Formatting the data returned by this query would take a long time, request from the front end would take approximately 8 minutes to return.
+This was interesting as the formatting simply iterated over the list of objects and extracted the relevant to into a dictionary, something that 
+isn't usually a computationally heavy task. After some preliminary troubleshooting, the issue was left in the code as it was likely to change 
+when displaying the data in graphs as intended and the tables were only intended as a tool for learning and debugging.
+
+Displaying the data in the front end required writing the 
+
+learnt about sending and receiving requests in angular
+using subscriptions
+talk about fixing neomodel ID issue
+dispaly just the one table as fine but adding the tabs and pagination was annoying
+loading time issue only on certain tab
 \subsection{Displaying Data in Graph}
 I created a second component to show the data in a graph form as per my initial design
 To do this I used cytoscape.js (more info)
 had to rewrite how the data is formatted when sent to the front end so that it matchs what cytoscape expects
 still takes a long time to get data from backend 
-so decided to write it to a json file so at least for quicker debugging it can load directly from the file
-tweaked some settings to make the graph easier to read
 explain fixing the long loading issue
+did this using a custom query function that takes CYPHER query with specific RETURN formats and puts the data in the right format
+added nodetype to return data to set styling
 \subsection{Inspect Element}
 writing proper async queries
 overlay issue
+- not documented but there is 2 ways to create them
+- ngtemplate vs loading component via typescript
+include screenshot
 \subsection{Searching}
+explain the different types of search
+redraws the graph
 \section{Conclusion}
