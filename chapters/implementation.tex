@@ -339,15 +339,37 @@ a neomodel object, instead the database query now returns a list of \verb|neo4j.
 the number of objects in the response and each object itself is wrapped in a list, while annoying this does not add any real complexity to processing the data. 
 The object itself acts like a normal Python dictionary so values can be extracted using their IDs which match the field names in the database.
 \subsection{Displaying Data in Graph}
-I created a second component to show the data in a graph form as per my initial design
-To do this I used cytoscape.js (more info)
+There are a variety of JavaScript libraries for representing data in a graph, the most notable is D3.js. D3 is a comprehensive library 
+for creating dynamic data visualisations and allows for the creation of force simulated graphs that update in real time. However, this is 
+quite complex and with the additional complexity of using a JavaScript library in TypeScript it quickly became unfeasible to use. 
+Instead, the decision was made to use Cytoscape.js which can create graphs using similar force simulations as D3, but they are not 
+dynamic by default.  
+
 had to rewrite how the data is formatted when sent to the front end so that it matchs what cytoscape expects
+cy creation is still in a subscription at this point
 still takes a long time to get data from backend 
 explain fixing the long loading issue
 did this using a custom query function that takes CYPHER query with specific RETURN formats and puts the data in the right format
-added nodetype to return data to set styling
+added nodetype to return data to set styling and have different events
 \subsection{Inspect Element}
-writing proper async queries
+The first feature to be implemented for getting more detailed data from the graph is the inspect element. This should display 
+a card on screen when the user clicks a node or an edge which contains all the data for the corresponding entity in the database. 
+On click events can be added to cytoscape elements using the \verb|on()| function which takes the event type, element type and a function that should be called. 
+After attempting to implement some simple on click events that would just output the fetched data to the console, a major issue became apparant.
+Currently, the variable for the graph is defined inside the subscription that fetches the data, which means the on click events would need to be 
+defined in the same scope. However, these functions also need to call a subscription which causes an error and is just poor coding practice. One solution 
+would be to declare the variable outside the subscription so that it can be accessed by the on clicks, but that results in the on click 
+functions attempting be defined on a variable that isn't defined yet. This is because there is nothing telling the script to wait for the 
+subscription to return data and finish before moving to the next command. The correct solution to this is to rewrite the service functions so that 
+the \verb|async| and \verb|await| keywords can be used. To do this the functions in the service file were updated to return a \verb|Promise| which contains a resolve 
+callback with the data from the HTTP request. Then async functions in the components TypeScript file were defined that call the service function 
+with the \verb|await| keyword. This means the elements definition for the graph can be replaced with the async function call 
+and the subscription wrapping the graph definition is no longer needed. It also means the \verb|then()| function can be used on the async function call, 
+where the code in the brackets is only executed once the promise is resolved. This second feature is used in the on click functions so that the data is available 
+before the code attempts to use it.
+
+Now the data is correctly retrieved it needs to be displayed in a UI element
+
 overlay issue
 - not documented but there is 2 ways to create them
 - ngtemplate vs loading component via typescript
