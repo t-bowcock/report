@@ -211,24 +211,24 @@ After importing the data Neo4j Bloom can be used to check the database structure
 \end{figure}
 \section{Web Stack}
 Before the database can be utilised the Angular and Django projects need to be set up and connected to form the web stack.
-The first step is to create a Django project, this is acheived using a single command provided by the Django Python library. 
+The first step is to create a Django project, this is achieved using a single command provided by the Django Python library. 
 This command creates the base folder structure for the project which includes the management file, an SQL database and several configuration files.
-The \verb|manage.py| file is used to perfrom most admin actions, commonly this is keeping the database migrations up to date and running the webserver; 
+The \verb|manage.py| file is used to perform most admin actions, commonly this is keeping the database migrations up to date and running the web server; 
 in this project only the latter is needed due to using a different database. Out of the configuration files generated, \verb|settings.py| 
 is the only one that needs configuring at this stage. Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to 
 indicate any origins (domain, scheme, or port) other than its own from which a browser should permit loading resources.\cite{CrossOriginResourceSharing2023}
-This needs enabling on this project so that the Angular app can send requests to the Django web server from another domain. Enabling cors headers in Django 
+This needs enabling on this project so that the Angular app can send requests to the Django web server from another domain. Enabling CORS headers in Django 
 requires the installation of the django-cors-headers Python library and some additional some entries in the \verb|settings.py| file. 
-Now a Django app can be created in the project using a command similar to the one that created the project. The app folder contains the models, views and urls files 
-that will contain all of the functionality of the backend. \verb|models.py| is the where the database interaction is defined, usually this is done via model classes 
+Now a Django app can be created in the project using a command similar to the one that created the project. The app folder contains the models, views and URLs files 
+that will contain all the functionality of the backend. \verb|models.py| is the where the database interaction is defined, usually this is done via model classes 
 and serialisers supplied by Django. However, due to using a database hosted by Neo4j this will be accomplished using the neomodel Python library. 
-The \verb|views.py| file sits on top of the models file, it contains the functions that take in HTTP requests, perfrom some action which may involve using the models 
-to interact with the database, and then generate a response. These functions are called by the paths declared in the \verb|urls.py| file, each path defines a url pattern 
+The \verb|views.py| file sits on top of the models file, it contains the functions that take in HTTP requests, perform some action which may involve using the models 
+to interact with the database, and then generate a response. These functions are called by the paths declared in the \verb|urls.py| file, each path defines a URL pattern 
 and the view function that should be called to handle it. Some final changes need to be made to the configuration files to finishing setting up the Django app and then the 
-backend is ready for development. The first change is to add some paths to the \verb|urls.py| in the main project folder, this is to set which urls should be directed 
+backend is ready for development. The first change is to add some paths to the \verb|urls.py| in the main project folder, this is to set which URLs should be directed 
 to the app that has just been defined. The other changes are in the \verb|settings.py| file and simply involve including the new app name in the \verb|INSTALLED_APPS| 
 section.
-\begin{figure}
+\begin{figure}[H]
     \dirtree{%
     .1 DjangoAPI.
     .2 DjangoAPI.
@@ -252,7 +252,7 @@ Creating the Angular project follows a similar set of steps to creating the Djan
 provided by the Angular library, this creates quite a large folder structure which can be very overwhelming. However, only a handful of these files 
 are used over the course of the project. Before configuring any of these, the app components and services need to be created, this is again done using commands provided 
 by Angular which generates the following folder structure for each component.
-\begin{figure}
+\begin{figure}[H]
     \dirtree{%
     .1 example.
     .2 example.component.css.
@@ -260,27 +260,27 @@ by Angular which generates the following folder structure for each component.
     .2 example.component.spec.ts.
     .3 example.component.ts
     .3 example.service.spec.ts.
-    .3 exmaple.service.ts
+    .3 exmaple.service.ts.
     }
     \caption{Example component folder structure}
 \end{figure}
 Each component has a structure similar to a normal HTML/CSS/JavaScript application, the exception being TypeScript is used instead of JavaScript.
-The additional component file (example.component.spec.ts) is where unit tests should be written and it includes some basic test structs as part of the 
+The additional component file (example.component.spec.ts) is where unit tests should be written, and it includes some basic test structs as part of the 
 file generation. \verb|service.ts| files contain classes and functions dedicated to interacting with the back end, for this project there is a shared services file at 
 the app level and then each component has a service which inherits from the shared one. Services also have \verb|spec.ts| file for API unit tests.
 A final commonly used file type is an interfaces file, this is a regular TypeScript file that contains many interface objects which are exported. 
 These are used to define custom data types/objects which are needed as TypeScript is a typed language and the data the front end receives can be in many formats.
 Once the components have been created it's important to update \verb|app.module.ts|, this file defines the root module and its contents. 
 If a component, service or imported library is not correctly defined in this file, then the project will fail to compile as it will not be able to find all the files required.
-Next \verb|app-routing.module.ts| will need configuring, similar to the \verb|urls.py| files in Django, this defines routes as a path and which componenet should be called for that path.
-This information is then used in the \verb|app.component.html| via the \verb|<router-outlet>| element, which will contain the HTML of the corresponding compenent for the current URL.
+Next \verb|app-routing.module.ts| will need configuring, similar to the \verb|urls.py| files in Django, this defines routes as a path and which component should be called for that path.
+This information is then used in the \verb|app.component.html| via the \verb|<router-outlet>| element, which will contain the HTML of the corresponding component for the current URL.
 The HTML file can also contain HTML elements that are to be displayed across all pages, such as a navigation bar.
 The final file of interest is \verb|tsconfig.json|, which is a configuration file that contains compiler options. This often will not require any changes, however 
-sometimes it is useful to disable a compiler errors, especially when working with third party libraries.
+sometimes it is useful to disable compiler errors, especially when working with third party libraries.
 
 Finally, to connect the Angular and Django project to allow requests and responses to be sent between them, a read only constant is defined 
 in the shared service of the Angular component. This constant contains the IP address of the web server created by the Django project, it can then 
-be used later when perfroming HTTP requests to direct them to the back end.
+be used later when performing HTTP requests to direct them to the back end.
 \subsection{Database Interaction}
 Neomodel was used to allow Django to connect to the remote database. The username, password and database URI are stored as 
 constants which are passed into the neomodel configuration. Then classes can be defined which represent each of the node and edge types.
@@ -294,7 +294,7 @@ environment, the decision was made to implement displaying the data in tables fi
 node and edge type and formatting it correctly. Getting all the data for a set of nodes is easy with neomodel due to the \verb|nodes.all()| method, 
 which returns a list of all the nodes for the given node type. However, this data was not in a format accepted by the front end. The list contained 
 instances of the model class which have string representations which meant it could be printed in the correct format, but that would not the format 
-returned in the HTTP request. Instead, a format function was written which extracts the data into a Python dictionary which can then be returned in a JSON repsonse.
+returned in the HTTP request. Instead, a format function was written which extracts the data into a Python dictionary which can then be returned in a JSON response.
 This method was suitable for node data, however relationships do not have a method equivalent to \verb|nodes.all()|. To get the data 
 for all the relationships of one type a custom CYPHER query has to be used, as shown in figure 4.8 for synergy data.
 \begin{figure}[H]
@@ -308,12 +308,12 @@ This was interesting as the formatting simply iterated over the list of objects 
 isn't usually a computationally heavy task. After some preliminary troubleshooting, the issue was left in the code as it was likely to change 
 when displaying the data in graphs as intended and the tables were only intended as a tool for learning and debugging.
 
-Displaying the data in the front end required writing the functions that send requests to the urls defined in the back end. 
+Displaying the data in the front end required writing the functions that send requests to the URLs defined in the back end. 
 These functions are in the shared services file described previously, each function sends a get request to a URL and returns an \verb|Observable| 
 object. Then in the TypeScript file for the component this object can be subscribed to so when the data is received it is stored in a class attribute. 
 This subscription first happens when the page is first initialised, this implemented via the \verb|ngOnInit()|. To get this data into a Material table it needs to 
 stored in a \verb|MatTableDataSource| which can then be set as the data source for the table in HTML as shown below. 
-\begin{figure}
+\begin{figure}[H]
     \begin{lstlisting}[language=HTML]
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="name">
@@ -323,21 +323,21 @@ stored in a \verb|MatTableDataSource| which can then be set as the data source f
     \end{lstlisting}
     \caption{Item table excerpt}
 \end{figure}
-As show in figure (INSERT) the table is defined using a series of \verb|ng-containers|, each container describes a column.
-In each container the usual table header and table data tags are used, however noe \verb|*matCellDef| can be used to get the data to be 
-displayed in the table using the data source. The tables for each data type are defined in the HTML and they are all wrapped in Material 
-tab groups. This allows tabs to be displayed a the top of the page to switch between tables, using Material to do this means this can be done 
+As show in figure 4.11 the table is defined using a series of \verb|ng-containers|, each container describes a column.
+In each container the usual table header and table data tags are used, however now \verb|*matCellDef| can be used to get the data to be 
+displayed in the table using the data source. The tables for each data type are defined in the HTML, and they are all wrapped in Material 
+tab groups. This allows tabs to be displayed at the top of the page to switch between tables, using Material to do this means this can be done 
 using just HTML which highlights the main benefit of the library. The data for each table is only fetched on the first time the tables tab is selected, 
-this reduces loading time when loading the page. The data is stored in a variable after the first request so that subsequent selections do not have to 
+this reduces loading time when loading the page. The data is stored in a variable after the first request, so that subsequent selections do not have to 
 re-request the data. It does still take the 8 minutes to load synergy and interaction data as mentioned in the previous section.
 
-After implementing these tables it was discoverd that the ID being returned was incorrect, instead of being the ID property of the node the 
+After implementing these tables it was discovered that the ID being returned was incorrect, instead of being the ID property of the node the 
 element ID from the database was being returned. These are different in Neo4j, the property being the ID extracted from the XML data and the element ID is the 
 ID automatically assigned to every entity in database on creation. After some investigation it was found this was caused by the use of 
 the models defined using neomodel. To fix this the queries all had to be rewritten using CYPHER queries instead to avoid the data being passed through 
 a neomodel object, instead the database query now returns a list of \verb|neo4j.graph.node| objects. The query response is a list regardless of 
 the number of objects in the response and each object itself is wrapped in a list, while annoying this does not add any real complexity to processing the data. 
-The object itself acts like a normal Python dictionary so values can be extracted using their IDs which match the field names in the database.
+The object itself acts like a normal Python dictionary, so values can be extracted using their IDs which match the field names in the database.
 \subsection{Displaying Data in Graph}
 There are a variety of JavaScript libraries for representing data in a graph, the most notable is D3.js. D3 is a comprehensive library 
 for creating dynamic data visualisations and allows for the creation of force simulated graphs that update in real time. However, this is 
