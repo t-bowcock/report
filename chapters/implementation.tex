@@ -343,14 +343,71 @@ There are a variety of JavaScript libraries for representing data in a graph, th
 for creating dynamic data visualisations and allows for the creation of force simulated graphs that update in real time. However, this is 
 quite complex and with the additional complexity of using a JavaScript library in TypeScript it quickly became unfeasible to use. 
 Instead, the decision was made to use Cytoscape.js which can create graphs using similar force simulations as D3, but they are not 
-dynamic by default.  
+dynamic by default. Cytoscape has a number of pre-made layouts that can be imported to quickly create basic graphs without the need for 
+extensive configuration. Before a graph can be generated the back end had to be updated so that data could be returned in the format required 
+by Cytoscape, which is shown in figure 4.12.
+\begin{figure}[H]
+    \begin{lstlisting}
+        {
+            nodes: [
+                {data: {id: <id>, name: <name>}},
+                {data: {id: <id>, name: <name>}},
+                ...
+            ],
+            edges: [
+                {data: {id: <id>, source: <source>, target: <target>, name: <name>}},
+                {data: {id: <id>, source: <source>, target: <target>, name: <name>}},
+                ...
+            ]
+        }
+    \end{lstlisting}
+    \caption{Data format expected by Cytoscape}
+\end{figure}
+As all the data needed to generate the graph is needed at one time, it would be efficient to use a CYPHER query that gets all that 
+data at once rather than combining several smaller requests. Initially, a CYPHER query was used that fetched all the data in the database, however 
+this includes many nodes that have no relationships which clutter the rendered graph. So instead of fetching all the data, a 
+CYPHER query was used that fetches all the data about related nodes, this is the query statement in figure 4.13.
+\begin{figure}[H]
+    \begin{lstlisting}
+        MATCH (n)-[r]-(m) RETURN n, r, m;
+    \end{lstlisting}
+    \caption{CYPHER query to get graph data}
+\end{figure}
+Once the data being sent by the back end is correctly formatted, rendering the graph requires very little code. Inside the subscription 
+that gets the data a variable is defined that contains a Cytoscape object which takes 4 parameters: container, elements, 
+style, and layout. Container is the HTML element the graph should be rendered in, elements is the data for the graph, style is optional and contains a 
+CSS-like style sheet, and layout specifies which imported layout to use. The style sheet for the graph is stored in a separate file and imported as 
+it can get very large which reduces code readability. Unfortunately, getting the data from the back end still suffers from long waiting times as before, 
+with this larger query often taking close to 20 minutes to return data.
 
-had to rewrite how the data is formatted when sent to the front end so that it matchs what cytoscape expects
-cy creation is still in a subscription at this point
-still takes a long time to get data from backend 
-explain fixing the long loading issue
-did this using a custom query function that takes CYPHER query with specific RETURN formats and puts the data in the right format
-added nodetype to return data to set styling and have different events
+As the loading issue still persists with the queries needed for the graph some further debugging was needed to find the issue. 
+Upon initial investigation it became clear that the database query returned almost instantly and so was not the issue, rather it was the 
+processing of the returned data in Python. However, from surface level inspection this was also confusing as the Python code simply looped 
+over the list of returned objects and extracts the relevant data into a dictionary. This is not something that would usually be computationally demanding, which 
+raised suspicion that accessed the neomodel objects created by the query was the source of the issue. To test this initially, the ID values that are fetched 
+multiple times per loop were stored in a variable, so they only had to be fetched once. This noticeably reduced the loading time, but it was still taking too long 
+to be usable. The CYPHER query was returning a lot of data with just over 6000 objects, so to reduce the amount of data that needed to be processed the 
+CYPHER query was re-written to only return the properties needed for the graph.
+\begin{figure}[H]
+    \begin{lstlisting}
+        MATCH (n)-[r]-(m) RETURN n.id,n.name,labels(n),m.id,m.name,labels(m);
+    \end{lstlisting}
+    \caption{Refined CYPHER query to get graph data}
+\end{figure}
+This change had the unexpected added benefit of stopping neomodel resolving the data into objects and instead returning the data 
+as a nested list of items where each inner list is the values specified by the RETURN in order. This meant that instead of accessing an object 
+every time data is extracted, it is a simply accessing an array via index. While this does make the code less readable, it means the request returns almost instantly.
+At this stage the \verb|labels()| were added to the query, this returns the type of the node, i.e. Item. This is sent as part of the graph data for a couple of purposes, 
+but at this stage it is just used as a way of specifying different styles for different node types.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{frontendGraph}
+    \caption{The final rendered graph}
+\end{figure}
+
+Now the graph is complete and loading data is much faster, it was decided that the table view created previously should be included as part of the final site. 
+To do this a toolbar was added using the Material library which contained a menu button which opens a side navigation menu. This is added in the \verb|app.component.html| file so that it 
+is visible on both the graph and table pages.
 \subsection{Inspect Element}
 The first feature to be implemented for getting more detailed data from the graph is the inspect element. This should display 
 a card on screen when the user clicks a node or an edge which contains all the data for the corresponding entity in the database. 
@@ -368,12 +425,50 @@ and the subscription wrapping the graph definition is no longer needed. It also 
 where the code in the brackets is only executed once the promise is resolved. This second feature is used in the on click functions so that the data is available 
 before the code attempts to use it.
 
-Now the data is correctly retrieved it needs to be displayed in a UI element
-
-overlay issue
-- not documented but there is 2 ways to create them
-- ngtemplate vs loading component via typescript
-include screenshot
+Now the data is correctly retrieved it needs to be displayed in a UI element; the Material library has card components that are 
+designed for displaying this kind of information. However, just using a normal card component will mean a portion of the screen 
+would have to be left blank for the card to be rendered in, this is space that could be used to display the graph. Luckily, the Material CDK (Component Dev Kit) 
+has the overlay component which is designed for rendering elements over existing ones. Unfortunately, the documentation provided by 
+the library is very sparse, and the code examples given were often incomplete or did not cover the functionality needed. 
+However, it is clear that there are 2 main ways of using overlay components; the first is to create a \verb|ng-template|, 
+HTML element which would contain the card component HTML. This template is tied to a boolean variable that toggles whether the element should be rendered or not.
+This is the simplest of the methods, but it cannot be used in this instance as the data isn't available until an entity is clicked and so the template errors 
+even though it isn't being rendered. The second method uses TypeScript to generate the overlay component and custom components to handle the content. 
+The code in figure 4.16 shows the code that creates an overlay component when an Item node is clicked.
+\begin{figure}[H]
+    \begin{lstlisting}[language=Java]
+        this.getItem(evt.target.id()).then(
+                (data) => {
+                    if (this.currentOverlay) {
+                        this.currentOverlay.destroy()
+                    }
+                    const overlayRef = this.overlay.create(this.overlayConfig);
+                    const portal = new ComponentPortal(ItemComponent);
+                    this.currentOverlay = overlayRef.attach(portal);
+                    this.currentOverlay.instance.itemData = data;
+                }
+            );
+    \end{lstlisting}
+    \caption{Code inside the function called when an Item node is clicked}
+\end{figure}
+First it checks if an overlay already exists, if it does then it is removed so that there is only one overlay on the screen at a time. 
+Then an \verb|OverlayRef| instance is created using a predefined overlay config. The overlay config is just a dictionary like object that can contain 
+various settings for the overlay, here it used to set the \verb|PositionStrategy| and some CSS which controls where the overlay is rendered and it's maximum size.
+A \verb|PositionStrategy| is another part of the Material CDK which is poorly documented; as the name suggests it defines where the component is positioned on the screen.
+In this instance a global position strategy is used which allows the overlay to be positioned anywhere on the screen regardless of other components. There are 
+other position strategies for positioning the element in relation to another component, which is often useful for creating a button drop down for example.
+Overlays display content using \verb|ComponentPortal| objects, so a new component needs to be created containing the content to be shown in the overlay. 
+The \verb|ItemComponent| being passed into the component portal is a custom component that is defined in the same way as the graph and table components have been defined.
+The HTML file contains the card element that will display the data, the TypeScript file defines the component and the variable that will contain the data. These components do not 
+have their own CSS files and instead are directed to use the CSS file for the graph component, this is so the same CSS definitions can be used across all the elements.
+Now the portal can be attached to the \verb|OverlayRef| object which means the overlay is actually displayed on the screen. However, it doesn't have any data as the data sent by the 
+back end has not been passed from the graph component to the child component. The final line in the code snippet sets the variable in the child component mentioned before, this is possible because 
+the variable was defined with the \verb|@Input()| tag, which allows data to be passed from a parent component to a view child.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{overlay}
+    \caption{An example of the overlay element}
+\end{figure}
 \subsection{Searching}
 explain the different types of search
 redraws the graph
