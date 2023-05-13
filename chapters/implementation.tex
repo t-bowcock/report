@@ -470,6 +470,43 @@ the variable was defined with the \verb|@Input()| tag, which allows data to be p
     \caption{An example of the overlay element}
 \end{figure}
 \subsection{Searching}
-explain the different types of search
-redraws the graph
-\section{Conclusion}
+The goal of the search element is to restrict the data displayed to the user so the graph only shows what they are interested in.
+To do this the search should take a set of query constraints from the user and which, when sent to the back end, should return the 
+corresponding set of data to be displayed in the graph. Given the structure of the data there are 5 possible search formats:
+\begin{itemize}
+    \item 1 node
+    \item 1 relationship
+    \item 1 node and 1 relationship
+    \item 2 nodes
+    \item 2 nodes and 1 relationship
+\end{itemize}
+Each of these search formats corresponds to a CYPHER query, the backend uses an if block to determine which constraints have been 
+entered and uses the relevant query. The framework for implementing these requests already existed from getting all the data for the graph, so that 
+functionality was moved into a separate function that is passed a query and returns the formatted data. 
+
+Now the format of the search and the data it returns the front end could be implemented to generate those searchs and display the data.
+Material autocomplete components were used for entering the node data, this is because the number of possible entries is very large so allowing the 
+user to enter values to narrow the list down should make finding the item required easier. As the autocomplete component is also restricted to the list 
+of values provided to it, there is a some data validation built into the element. To get the list of values to use for the element a new function had to be 
+implemented in the back end to get all the entity names and IDs, the name would be displayed to the user but the ID is what will be used to perform the search.
+This data can then be stored in a variable that tracks the changes to the autocomplete entry. When the entry value changes a filter function is called which applies 
+a filter to the list of names displayed based on the new value. The value is a string until an item is selected, so the function will only return names that start with the entered string. 
+Once an item is selected it then uses the ID value to find the correct name to display. Once an item is selected another function is called that handles how the data is displayed,
+this simply uses the ID to get the correct name.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{searchElement}
+    \caption{The autocomplete dropdown}
+\end{figure}
+To filter the search on relationship type a Material select component is used. This is much simpler than the autocompletes described above, and this is 
+suitable here as there is only 3 options to choose from. HTML is used to define the select element and each option is a child of the select element, 
+the value of the element is tied to a variable in the TypeScript class.
+A button is used to call a submit function with all three values, this function passes the values to the a service function which contains another if block 
+which determines the correct format for the query URL. The different URLs call the back end function described previously.
+The submit function also re-draws the graph, this involves removing the current elements from the \verb|cy| variable, adding the new data, and finally re-running 
+the layout.
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{exampleSearch}
+    \caption{An example search using 1 node and a relationship}
+\end{figure}
