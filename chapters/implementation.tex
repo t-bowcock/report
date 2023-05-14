@@ -411,16 +411,16 @@ is visible on both the graph and table pages.
 \subsection{Inspect Element}
 The first feature to be implemented for getting more detailed data from the graph is the inspect element. This should display 
 a card on screen when the user clicks a node or an edge which contains all the data for the corresponding entity in the database. 
-On click events can be added to cytoscape elements using the \verb|on()| function which takes the event type, element type and a function that should be called. 
-After attempting to implement some simple on click events that would just output the fetched data to the console, a major issue became apparant.
+On click events can be added to Cytoscape elements using the \verb|on()| function which takes the event type, element type and a function that should be called. 
+After attempting to implement some simple on click events that would just output the fetched data to the console, a major issue became apparent.
 Currently, the variable for the graph is defined inside the subscription that fetches the data, which means the on click events would need to be 
 defined in the same scope. However, these functions also need to call a subscription which causes an error and is just poor coding practice. One solution 
 would be to declare the variable outside the subscription so that it can be accessed by the on clicks, but that results in the on click 
-functions attempting be defined on a variable that isn't defined yet. This is because there is nothing telling the script to wait for the 
+functions attempting to use a variable that isn't defined yet. This is because there is nothing telling the script to wait for the 
 subscription to return data and finish before moving to the next command. The correct solution to this is to rewrite the service functions so that 
 the \verb|async| and \verb|await| keywords can be used. To do this the functions in the service file were updated to return a \verb|Promise| which contains a resolve 
 callback with the data from the HTTP request. Then async functions in the components TypeScript file were defined that call the service function 
-with the \verb|await| keyword. This means the elements definition for the graph can be replaced with the async function call 
+with the \verb|await| keyword. This means the element's definition for the graph can be replaced with the async function call 
 and the subscription wrapping the graph definition is no longer needed. It also means the \verb|then()| function can be used on the async function call, 
 where the code in the brackets is only executed once the promise is resolved. This second feature is used in the on click functions so that the data is available 
 before the code attempts to use it.
@@ -466,7 +466,7 @@ back end has not been passed from the graph component to the child component. Th
 the variable was defined with the \verb|@Input()| tag, which allows data to be passed from a parent component to a view child.
 \begin{figure}[H]
     \centering
-    \includegraphics[scale=0.4]{overlay}
+    \includegraphics[scale=0.4]{overlayExample}
     \caption{An example of the overlay element}
 \end{figure}
 \subsection{Searching}
@@ -484,11 +484,11 @@ Each of these search formats corresponds to a CYPHER query, the backend uses an 
 entered and uses the relevant query. The framework for implementing these requests already existed from getting all the data for the graph, so that 
 functionality was moved into a separate function that is passed a query and returns the formatted data. 
 
-Now the format of the search and the data it returns the front end could be implemented to generate those searchs and display the data.
+Now the format of the search and the data it returns the front end could be implemented to generate those searches and display the data.
 Material autocomplete components were used for entering the node data, this is because the number of possible entries is very large so allowing the 
 user to enter values to narrow the list down should make finding the item required easier. As the autocomplete component is also restricted to the list 
 of values provided to it, there is a some data validation built into the element. To get the list of values to use for the element a new function had to be 
-implemented in the back end to get all the entity names and IDs, the name would be displayed to the user but the ID is what will be used to perform the search.
+implemented in the back end to get all the entity names and IDs, the name would be displayed to the user, but the ID is what will be used to perform the search.
 This data can then be stored in a variable that tracks the changes to the autocomplete entry. When the entry value changes a filter function is called which applies 
 a filter to the list of names displayed based on the new value. The value is a string until an item is selected, so the function will only return names that start with the entered string. 
 Once an item is selected it then uses the ID value to find the correct name to display. Once an item is selected another function is called that handles how the data is displayed,
@@ -501,7 +501,7 @@ this simply uses the ID to get the correct name.
 To filter the search on relationship type a Material select component is used. This is much simpler than the autocompletes described above, and this is 
 suitable here as there is only 3 options to choose from. HTML is used to define the select element and each option is a child of the select element, 
 the value of the element is tied to a variable in the TypeScript class.
-A button is used to call a submit function with all three values, this function passes the values to the a service function which contains another if block 
+A button is used to call a submit function with all three values, this function passes the values to a service function which contains another if block 
 which determines the correct format for the query URL. The different URLs call the back end function described previously.
 The submit function also re-draws the graph, this involves removing the current elements from the \verb|cy| variable, adding the new data, and finally re-running 
 the layout.
