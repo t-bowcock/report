@@ -1,5 +1,81 @@
-\section{Introduction}
 \section{Project Evaluation}
+This section will compare the finised project to the project aims set out in the introduction.
+\begin{description}
+    \item[Project Aim 1] - Create a graph database containing relevant data about The Binding of Isaac.
+\end{enumerate}
+This objective covered finding a suitable data source and using that to generate the database. This was very successful, data can be 
+extracted from an XML file that contains the information from the most reliable source and this data has been correctly modelled in 
+a graph database host by Neo4j. The database contains data on all the items and trinkets in the game alongside their interactions, it also 
+contains a small amount of data on the characters and their interactions.
+\begin{description}
+    \item[Project Aim 2] - Develop a web application that utilises a graph database to helps users to find item interactions in the game.
+\end{description}
+To acheive this aim an Angular and Django based web application was developed that contains a graph showing the interactions between items in the game. 
+The user can get detailed information on the item or interation by clicking on the corresponding area of the graph, and the data the graph represents can be 
+changed by using a flexible search feature.
+\begin{description}
+    \item[Project Aim 3] - Explore testing methodologies to aid in producing a stable application with high quality code.
+\end{description}
+Unfortunately, this aim was not met during this project. There was some preliminary research into using the testing frameworks built into the 
+web frameworks used and integrating continuous integration into the project. While no formal testing was performed, all the code was written 
+using linting and autoformatting tools to ensure a consistent level of code quality.
+\begin{description}
+    \item[Project Aim 4] - Search for possible ways to extend the project with future updates.
+\end{description}
+Throughout the project notes were made to ensure that any features that could potentially be implemented were recorded. These features will 
+be discussed in the next section of this evaluation.
 \section{Future Work}
+\subsection*{Hosting and CI/CD}
+Currently the project is just run locally on the users machine by deploying the front and back end servers via command line. 
+In the future this should be moved to a hosted service such as AWS so that the website can be used by the public. This would likely involve 
+running the web servers in a containerisation system such as Docker or Kubernetes so that deploying them is much simplier and they can benefit from 
+feature such as load balancing. This approach would also mean continuous deployment techniques can be used so that when changes are made to the 
+GitHub repository, those changes are automatically pushed to the live webservers, speeding up production and allowing for the fast application of hot fixes. 
+GitHub pipelines can also be used to automatically test and evaluate the quality of code everytime the codebase is updated. This can be done by 
+running linters on the all the code, running the unit tests and testing how much of the code is actually covered by unit tests. 
+These unit tests could be developed using the testing boilerplate that is provided by both Angular and Django, or another testing framework could be chosen 
+such as PyTest for Python.
+\subsection*{Improved Data Processing}
+While the data processing currently implemented is sufficient for creating a usable database and providing usable data to the user, 
+it could still be improved. The first minor improvement would be to the cleaning of the extracted data, there are still some tags that slip 
+through the current set of RegEx statements and some of the tags that are caught result in bad formatting in the final string. Making some small 
+changes to this section of the data processing will help make the data easier to read and understand. A more complex improvement would be 
+added the functionality to extract character data. This is currently ignored as the format for each characters data is unique and it is not required 
+to show the interactions for most items, however this should be added so that all the information is available to the user in one place. The complexity in this task 
+comes from ensuring that the data is extracted in a way that it can be reliably repeated without small changes in the data breaking the functions. This leads into the final 
+data processing improvement which is adding the ability to update the database via the website. This should be done via 2 methods; the first is to download a the latest XML file 
+from the Fandom Wiki and re-run the data extraction script and update the database. Automating this would require the data extraction to be robust enough to handle small changes in the format 
+of the XML file as mentioned previously. The other metho would be to add the ability to send other types of HTTP requests to the backend such as PUT and PATCH requests so that single entities can be updated 
+in the databse. Both of these methods could be implemented, but they should both only be available to admin users to prevent corruption of the database.
+\subsection*{UI Improvements}
+The final set of improvments at this stage would be to the user interface, it currently needs a bit of polishing as there are a few visual bugs and 
+it would be quite difficult for a new user to understand the site. Small quality of life changes such as adding images for each of the items and links to 
+the Fandom Wiki on the detials card would make it easier for the user to find the items they are looking for. Improving the graph layout would also help this, as 
+it in its current state a lot of the nodes overlap when a lot of data is displayed. This could be fixed by either modifying the current layout to update dynamically 
+and set force parameters so that nodes cannot overlap, or time could be put into using D3.js so that the graph can be customised completely. Another quality of life 
+improvement would be adding a loading indicator, so that the user knows the page is actually doing something and hasn't crashed; this would be especially useful when loading 
+the graph page for the first time as this can take longer than expected. The final UI improvement would be to add more ways to search the data, currently the user can 
+only search using node names and relationshiop type. Adding the ability to search on more properties of a node and the ability to search based on partial matches for item descriptions would 
+greatly improve the user's ability to find what they are looking for. This would require much more sophisticated search methods and may not be possible using just CYPHER queries but 
+it would definitly be worth the investment.
 \section{Lessons Learned}
-\section{Conclusion}
+Over the course of this project I have had to oppotunity to pick up and develop many new skills, this section will cover 
+a few of those skills in more detail. When interacting with XML files in the past I have just used the built in XML element tree library, 
+which while certainly a usable tool, isn't suitable for processing large XML data as was required for this project. Using BeatifulSoup 
+for this project has provided me with another tool to use which I will no doubt find very useful going forward in my career. 
+This project is the first time I have used and interacted with a Non-SQL database; from my studies and industrial placement 
+I have a good skill set for managing SQL databases and would often tend towards using them as they are familiar. However, this was 
+an opportunity to try something new and find that this style of databse isn't that intimidating. Looking back at work completed 
+on placement I wish I had the knowledge I do know as it would have been extremely useful. The same can be said for using Django and Angular, 
+I chose this combination because of using it on my placement. However, I know realise there were some aspects of that implementation that were 
+not executed correctly, namely the method for connecting the two frameworks. Learning the correct way to set up the API so that requests are sent 
+between the front and back end will be invaluable and will be applicable even in projects using different frameworks. 
+I am glad I chose to develop this product as a web application because I usually stay away from web based work due to not 
+enjoying past experiences with it. While I haven't been converted in a front end engineer, I have certainly gained a new appreciation for it 
+and learning to use the right tools has helped with that. An example of this is using Cytoscape, this is not my first attempt at displaying 
+network graphs in a website, in fact the placement project that I used Angular in featured this. However, we tried to use NgxGraph which is 
+a graph library for Angular, which seemed perfect, but in reality it is lacking several key features and lacked documentation is most areas. 
+Using cytoscape made displaying the graph for this project, which contains a lot more data, much easier and it is definitly a tool I would 
+look to use again in the future. Overall this project has been a good lesson in time management and project planning, it is something that I 
+find challenging with large projects such as this one. I have learnt from my many mistakes with this project and by the end of project I felt 
+a lot more comfortable breaking down a large workload into tasks and properly managing my time on those tasks.
