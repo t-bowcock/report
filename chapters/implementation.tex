@@ -11,13 +11,13 @@ Git was chosen for version control as it is the industry standard, with GitHub b
 \subsection{Database Visualisation}
 Neo4j has two tools for database visualisation as part of the AuraDB web interface; Bloom and Browser. Bloom is used to 
 visualise the data in a graph as has been discussed in the design chapter previously. Browser is used to test CYPHER queries on the database.
-CYPHER is the query language created by Neo4j for retrieving data from their graph databases. As shown Figure 4.1, the user can enter a 
+CYPHER is the query language created by Neo4j for retrieving data from their graph databases. As shown Figure \ref{auraBrowser}, the user can enter a 
 query and have the data returned as a graph, table (represented as a series of JSON objects), raw text and as code (JSON objects).
 This is useful for quickly testing CYPHER queries and debugging database interactions.
-\begin{figure}[h]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{neo4jBrowser}
-    \caption{AuraDB Browser}
+    \caption{AuraDB Browser}\label{auraBrowser}
 \end{figure}
 \section{Libraries}
 \subsection{Data Processing}
@@ -51,7 +51,7 @@ Once received, the updated XML dump presented its own challenges, the first bein
 large for most text editors to load with syntax highlighting. This made it difficult to understand the structure of the data as the XML tags became harder 
 to pick out from regular text. Aside from a small preamble, all the data in the file is contained in a series of \verb|page| elements, which unsurprisingly represents a page on the site.
 Each page element has a similar structure to the below example (Fig. 4.2).
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \begin{lstlisting}[language=XML]
         <page>
         <title>Template:</title>
@@ -85,7 +85,7 @@ and then pull the data from the text tag. The XML file contains collections page
 used to get a list of all the item names. Character names are fetched from the \verb|Characters| page. This has a list of links to the character pages, from which the names can be extracted using RegEx. 
 Unfortunately, the same does not exist for trinkets as the page that would contain that list instead uses a template which autofills the data. 
 As a temporary fix, the list of trinkets is fetched from a hardcoded file.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \begin{lstlisting}[language=Python]
         ITEM_REGEX = re.compile("content =(.*?)}}", flags=re.DOTALL)
 
@@ -116,7 +116,7 @@ The rest of the pages just redirect back to that page and so instead of handling
 
 Functions could now be written for getting item, trinket and character data respectively. These functions all follow the same format 
 and the differences are in catching special exceptions and the output created.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \begin{lstlisting}[language=Python]
         def get_all_items(self) -> list:
         item_names = self._get_item_names()
@@ -170,9 +170,9 @@ the scope of this project.
 Once all the item, character, and trinket data has been extracted the lookup dictionaries can be used to process the synergies and interactions. 
 The function to process the data is fairly simple, it iterates over each entry in the dictionary, each entry contains a list of strings. That list is iterated over 
 and the RegEx show in figure 4.5 is applied to create a list of item names which represent the relationship destination. The RegEx looks for tags that link to other items/characters/trinkets,
-for example {{i|Libra}}. However, these tags don't seem to always follow a set structure which is why the RegEx has some extra match groups either side of the \verb|(.+?)| group to catch and ignore extra 
+for example \verb#{{i|Libra}}#. However, these tags don't seem to always follow a set structure which is why the RegEx has some extra match groups either side of the \verb|(.+?)| group to catch and ignore extra 
 characters that are not relevant. These irregularities also mean an if block is needed to catch links where the link text does not match the text in the title tag.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \begin{lstlisting}[language=Python]
         destinations = re.findall(r"{{[ict]\|(1=)?(.+?)(\|.+?)?}}", relationship[0], re.IGNORECASE)
     \end{lstlisting}
@@ -182,7 +182,7 @@ The ID lookups are then used to find the ID for the source entity and the destin
 \subsection{Cleaning the Data}
 The data extracted above still contains special characters and formatting that is used by the XML to generate the website correctly. 
 This includes \verb|<br>| HTML tags, tags using square brackets to denote alternative text/images and the curly brace tags seen above which are used for a variety of purposes.
-One of the uses of curly brace tags is to show which version of the game the information is relevant to; on the webpage this is show via a small image but in the XML
+One of the uses of curly brace tags is to show which version of the game the information is relevant to; on the webpage this is shown via a small image but in the XML
 that image is represent by a tag in the following format \verb#{{dlc|<tag>}}# where \verb|<tag>| is replaced by a code that represent the game version.
 These tags are replaced with a relevant string using RegEx, e.g. \verb#{{dlc|anr}}# becomes `(Added in Afterbirth, Removed in Repentance)'.
 RegEx is then used to extract the useful text from the rest of the tags and remove the brackets and any other formatting characters.
@@ -196,7 +196,7 @@ The AuraDB platform provided by Neo4j has a data importer tool which uses CSV fi
 Creating CSV files with Python is very simple, the data needs to be in a 2D array where each inner array is a row in the CSV file,
 the CSV writer also takes a list of headers and from the two it can create a CSV file. The CSV files needed to be created so that each file represents 
 a node/edge in the model, this meant 5 CSV files were needed. With the files uploaded to the import tool the model shown in figure 4.6 could be created.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[scale=0.3]{dataImport}
     \caption{Database Model in Neo4j Data Importer}
@@ -204,7 +204,7 @@ a node/edge in the model, this meant 5 CSV files were needed. With the files upl
 As the model shows items and trinkets can have interactions and relationships between each other and themselves. The relationships to character 
 entities are only towards the character nodes because the character data is not processed as discussed above.
 After importing the data Neo4j Bloom can be used to check the database structure which is show in figure 4.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{importedData}
     \caption{Bloom showing complete database}
@@ -216,7 +216,7 @@ This command creates the base folder structure for the project which includes th
 The \verb|manage.py| file is used to perform most admin actions, commonly this is keeping the database migrations up to date and running the web server; 
 in this project only the latter is needed due to using a different database. Out of the configuration files generated, \verb|settings.py| 
 is the only one that needs configuring at this stage. Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to 
-indicate any origins (domain, scheme, or port) other than its own from which a browser should permit loading resources.\cite{CrossOriginResourceSharing2023}
+indicate any origins (domain, scheme, or port) other than its own from which a browser should permit loading resources\cite{CrossOriginResourceSharing2023}.
 This needs enabling on this project so that the Angular app can send requests to the Django web server from another domain. Enabling CORS headers in Django 
 requires the installation of the django-cors-headers Python library and some additional some entries in the \verb|settings.py| file. 
 Now a Django app can be created in the project using a command similar to the one that created the project. The app folder contains the models, views and URLs files 
@@ -228,7 +228,7 @@ and the view function that should be called to handle it. Some final changes nee
 backend is ready for development. The first change is to add some paths to the \verb|urls.py| in the main project folder, this is to set which URLs should be directed 
 to the app that has just been defined. The other changes are in the \verb|settings.py| file and simply involve including the new app name in the \verb|INSTALLED_APPS| 
 section.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \dirtree{%
     .1 DjangoAPI.
     .2 DjangoAPI.
@@ -251,16 +251,16 @@ section.
 Creating the Angular project follows a similar set of steps to creating the Django project. First a new project is creating using a command 
 provided by the Angular library, this creates quite a large folder structure which can be very overwhelming. However, only a handful of these files 
 are used over the course of the project. Before configuring any of these, the app components and services need to be created, this is again done using commands provided 
-by Angular which generates the following folder structure for each component.
-\begin{figure}[H]
+by Angular which generates the folder structure shown in Figure 4.9 for each component.
+\begin{figure}[!htbp]
     \dirtree{%
     .1 example.
     .2 example.component.css.
     .2 example.component.html.
     .2 example.component.spec.ts.
-    .3 example.component.ts
-    .3 example.service.spec.ts.
-    .3 exmaple.service.ts.
+    .2 example.component.ts.
+    .2 example.service.spec.ts.
+    .2 example.service.ts.
     }
     \caption{Example component folder structure}
 \end{figure}
@@ -296,8 +296,8 @@ which returns a list of all the nodes for the given node type. However, this dat
 instances of the model class which have string representations which meant it could be printed in the correct format, but that would not the format 
 returned in the HTTP request. Instead, a format function was written which extracts the data into a Python dictionary which can then be returned in a JSON response.
 This method was suitable for node data, however relationships do not have a method equivalent to \verb|nodes.all()|. To get the data 
-for all the relationships of one type a custom CYPHER query has to be used, as shown in figure 4.8 for synergy data.
-\begin{figure}[H]
+for all the relationships of one type a custom CYPHER query has to be used, as shown in figure 4.10 for synergy data.
+\begin{figure}[!htbp]
     \begin{lstlisting}[language=Python]
         neomodel.db.cypher_query("MATCH (n)-[r:Synergy]->(m) RETURN n, r, m")
     \end{lstlisting}
@@ -311,9 +311,9 @@ when displaying the data in graphs as intended and the tables were only intended
 Displaying the data in the front end required writing the functions that send requests to the URLs defined in the back end. 
 These functions are in the shared services file described previously, each function sends a get request to a URL and returns an \verb|Observable| 
 object. Then in the TypeScript file for the component this object can be subscribed to so when the data is received it is stored in a class attribute. 
-This subscription first happens when the page is first initialised, this implemented via the \verb|ngOnInit()|. To get this data into a Material table it needs to 
+This subscription first happens when the page is first initialised, this is implemented via the \verb|ngOnInit()|. To get this data into a Material table it needs to 
 stored in a \verb|MatTableDataSource| which can then be set as the data source for the table in HTML as shown below. 
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \begin{lstlisting}[language=HTML]
         <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="name">
@@ -334,10 +334,15 @@ re-request the data. It does still take the 8 minutes to load synergy and intera
 After implementing these tables it was discovered that the ID being returned was incorrect, instead of being the ID property of the node the 
 element ID from the database was being returned. These are different in Neo4j, the property being the ID extracted from the XML data and the element ID is the 
 ID automatically assigned to every entity in database on creation. After some investigation it was found this was caused by the use of 
-the models defined using neomodel. To fix this the queries all had to be rewritten using CYPHER queries instead to avoid the data being passed through 
+the models defined using neomodel. To fix this the queries had to be rewritten using CYPHER queries instead to avoid the data being passed through 
 a neomodel object, instead the database query now returns a list of \verb|neo4j.graph.node| objects. The query response is a list regardless of 
 the number of objects in the response and each object itself is wrapped in a list, while annoying this does not add any real complexity to processing the data. 
 The object itself acts like a normal Python dictionary, so values can be extracted using their IDs which match the field names in the database.
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.35]{tableExample}
+    \caption{The final Item table}
+\end{figure}
 \subsection{Displaying Data in Graph}
 There are a variety of JavaScript libraries for representing data in a graph, the most notable is D3.js. D3 is a comprehensive library 
 for creating dynamic data visualisations and allows for the creation of force simulated graphs that update in real time. However, this is 
@@ -345,8 +350,8 @@ quite complex and with the additional complexity of using a JavaScript library i
 Instead, the decision was made to use Cytoscape.js which can create graphs using similar force simulations as D3, but they are not 
 dynamic by default. Cytoscape has a number of pre-made layouts that can be imported to quickly create basic graphs without the need for 
 extensive configuration. Before a graph can be generated the back end had to be updated so that data could be returned in the format required 
-by Cytoscape, which is shown in figure 4.12.
-\begin{figure}[H]
+by Cytoscape, which is shown in figure 4.13.
+\begin{figure}[!htbp]
     \begin{lstlisting}
         {
             nodes: [
@@ -366,8 +371,8 @@ by Cytoscape, which is shown in figure 4.12.
 As all the data needed to generate the graph is needed at one time, it would be efficient to use a CYPHER query that gets all that 
 data at once rather than combining several smaller requests. Initially, a CYPHER query was used that fetched all the data in the database, however 
 this includes many nodes that have no relationships which clutter the rendered graph. So instead of fetching all the data, a 
-CYPHER query was used that fetches all the data about related nodes, this is the query statement in figure 4.13.
-\begin{figure}[H]
+CYPHER query was used that fetches all the data about related nodes, this is the query statement in figure 4.14.
+\begin{figure}[!htbp]
     \begin{lstlisting}
         MATCH (n)-[r]-(m) RETURN n, r, m;
     \end{lstlisting}
@@ -388,7 +393,7 @@ raised suspicion that accessed the neomodel objects created by the query was the
 multiple times per loop were stored in a variable, so they only had to be fetched once. This noticeably reduced the loading time, but it was still taking too long 
 to be usable. The CYPHER query was returning a lot of data with just over 6000 objects, so to reduce the amount of data that needed to be processed the 
 CYPHER query was re-written to only return the properties needed for the graph.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \begin{lstlisting}
         MATCH (n)-[r]-(m) RETURN n.id,n.name,labels(n),m.id,m.name,labels(m);
     \end{lstlisting}
@@ -399,7 +404,7 @@ as a nested list of items where each inner list is the values specified by the R
 every time data is extracted, it is a simply accessing an array via index. While this does make the code less readable, it means the request returns almost instantly.
 At this stage the \verb|labels()| were added to the query, this returns the type of the node, i.e. Item. This is sent as part of the graph data for a couple of purposes, 
 but at this stage it is just used as a way of specifying different styles for different node types.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[scale=0.4]{frontendGraph}
     \caption{The final rendered graph}
@@ -411,7 +416,7 @@ is visible on both the graph and table pages.
 \subsection{Inspect Element}
 The first feature to be implemented for getting more detailed data from the graph is the inspect element. This should display 
 a card on screen when the user clicks a node or an edge which contains all the data for the corresponding entity in the database. 
-On click events can be added to Cytoscape elements using the \verb|on()| function which takes the event type, element type and a function that should be called. 
+On click events can be added to Cytoscape elements using the \verb|on()| function which takes the trigger type, element type and a function that should be called. 
 After attempting to implement some simple on click events that would just output the fetched data to the console, a major issue became apparent.
 Currently, the variable for the graph is defined inside the subscription that fetches the data, which means the on click events would need to be 
 defined in the same scope. However, these functions also need to call a subscription which causes an error and is just poor coding practice. One solution 
@@ -434,8 +439,8 @@ However, it is clear that there are 2 main ways of using overlay components; the
 HTML element which would contain the card component HTML. This template is tied to a boolean variable that toggles whether the element should be rendered or not.
 This is the simplest of the methods, but it cannot be used in this instance as the data isn't available until an entity is clicked and so the template errors 
 even though it isn't being rendered. The second method uses TypeScript to generate the overlay component and custom components to handle the content. 
-The code in figure 4.16 shows the code that creates an overlay component when an Item node is clicked.
-\begin{figure}[H]
+The code in figure 4.17 shows the code that creates an overlay component when an Item node is clicked.
+\begin{figure}[!htbp]
     \begin{lstlisting}[language=Java]
         this.getItem(evt.target.id()).then(
                 (data) => {
@@ -464,7 +469,7 @@ have their own CSS files and instead are directed to use the CSS file for the gr
 Now the portal can be attached to the \verb|OverlayRef| object which means the overlay is actually displayed on the screen. However, it doesn't have any data as the data sent by the 
 back end has not been passed from the graph component to the child component. The final line in the code snippet sets the variable in the child component mentioned before, this is possible because 
 the variable was defined with the \verb|@Input()| tag, which allows data to be passed from a parent component to a view child.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[scale=0.4]{overlayExample}
     \caption{An example of the overlay element}
@@ -493,7 +498,7 @@ This data can then be stored in a variable that tracks the changes to the autoco
 a filter to the list of names displayed based on the new value. The value is a string until an item is selected, so the function will only return names that start with the entered string. 
 Once an item is selected it then uses the ID value to find the correct name to display. Once an item is selected another function is called that handles how the data is displayed,
 this simply uses the ID to get the correct name.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[scale=0.4]{searchElement}
     \caption{The autocomplete dropdown}
@@ -505,7 +510,7 @@ A button is used to call a submit function with all three values, this function 
 which determines the correct format for the query URL. The different URLs call the back end function described previously.
 The submit function also re-draws the graph, this involves removing the current elements from the \verb|cy| variable, adding the new data, and finally re-running 
 the layout.
-\begin{figure}[H]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[scale=0.4]{exampleSearch}
     \caption{An example search using 1 node and a relationship}
